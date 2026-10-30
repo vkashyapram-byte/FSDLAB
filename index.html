@@ -537,6 +537,7 @@ if (!phoneRegex.test(phone.value)) {
         <a href="#lab5-requirements">Requirements</a>
         <a href="#lab5-theory">Suggested Reading</a>
         <a href="#lab5-procedure">Procedure</a>
+        <a href="#lab5-fullcode">Complete Code</a>
         <a href="#lab5-demo">Live Component Preview</a>
         <a href="#lab5-inferences">Inferences</a>
         <a href="#lab5-output">Output</a>
@@ -652,6 +653,68 @@ export default StudentCard;</code></pre>
             <p><strong>Step 8:</strong> Observe how props pass data from App to StudentCard component.</p>
           </li>
         </ol>
+      </section>
+
+      <!-- Complete Runnable File Box -->
+      <section id="lab5-fullcode" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📄</span> Complete Source Code</h3>
+        <p class="section-text">The full source code files for Experiment 5 (created in your Vite React project):</p>
+
+        <!-- StudentCard.jsx -->
+        <div class="code-wrapper">
+          <div class="code-header">
+            <span>src/StudentCard.jsx</span>
+            <button class="copy-btn" data-clipboard="code-lab5-full-card">Copy File</button>
+          </div>
+          <pre><code id="code-lab5-full-card">function StudentCard({ name, dept }) {
+  return (
+    &lt;div style={{ border: '1px solid #ccc', padding: '10px', margin: '10px' }}&gt;
+      &lt;h3&gt;{name}&lt;/h3&gt;
+      &lt;p&gt;Department: {dept}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default StudentCard;</code></pre>
+        </div>
+
+        <!-- App.jsx -->
+        <div class="code-wrapper">
+          <div class="code-header">
+            <span>src/App.jsx</span>
+            <button class="copy-btn" data-clipboard="code-lab5-full-app">Copy File</button>
+          </div>
+          <pre><code id="code-lab5-full-app">import StudentCard from './StudentCard';
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Welcome to Full Stack Lab&lt;/h1&gt;
+      &lt;StudentCard name="Rohit Kumar" dept="CSE" /&gt;
+      &lt;StudentCard name="Ananya Sharma" dept="ISE" /&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;</code></pre>
+        </div>
+
+        <!-- main.jsx -->
+        <div class="code-wrapper">
+          <div class="code-header">
+            <span>src/main.jsx</span>
+            <button class="copy-btn" data-clipboard="code-lab5-full-main">Copy File</button>
+          </div>
+          <pre><code id="code-lab5-full-main">import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  &lt;React.StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/React.StrictMode&gt;
+);</code></pre>
+        </div>
       </section>
 
       <!-- Live Component Preview -->
@@ -793,6 +856,7 @@ export default StudentCard;</code></pre>
         <a href="#lab6-requirements">Requirements</a>
         <a href="#lab6-theory">Suggested Reading</a>
         <a href="#lab6-procedure">Procedure</a>
+        <a href="#lab6-fullcode">Complete Code</a>
         <a href="#lab6-demo">Live Counter &amp; Todo Demo</a>
         <a href="#lab6-inferences">Inferences</a>
         <a href="#lab6-output">Output</a>
@@ -945,6 +1009,105 @@ export default App;</code></pre>
             <p><strong>Step 8:</strong> Observe how state changes cause the UI to re-render automatically.</p>
           </li>
         </ol>
+      </section>
+
+      <!-- Complete Runnable File Box -->
+      <section id="lab6-fullcode" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📄</span> Complete Source Code</h3>
+        <p class="section-text">The full component source files for Experiment 6 demonstrating state management and event handling:</p>
+
+        <!-- Counter.jsx -->
+        <div class="code-wrapper">
+          <div class="code-header">
+            <span>src/Counter.jsx</span>
+            <button class="copy-btn" data-clipboard="code-lab6-full-counter">Copy File</button>
+          </div>
+          <pre><code id="code-lab6-full-counter">import { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;Counter: {count}&lt;/h2&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Increment&lt;/button&gt;
+      &lt;button onClick={() =&gt; setCount(count - 1)}&gt;Decrement&lt;/button&gt;
+      &lt;button onClick={() =&gt; setCount(0)}&gt;Reset&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default Counter;</code></pre>
+        </div>
+
+        <!-- TodoList.jsx -->
+        <div class="code-wrapper">
+          <div class="code-header">
+            <span>src/TodoList.jsx</span>
+            <button class="copy-btn" data-clipboard="code-lab6-full-todo">Copy File</button>
+          </div>
+          <pre><code id="code-lab6-full-todo">import { useState } from 'react';
+
+function TodoList() {
+  const [todos, setTodos] = useState([]);
+  const [input, setInput] = useState('');
+
+  const addTodo = () =&gt; {
+    if (input.trim()) {
+      setTodos([...todos, input]);
+      setInput('');
+    }
+  };
+
+  const removeTodo = (index) =&gt; {
+    setTodos(todos.filter((_, i) =&gt; i !== index));
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;To-Do List&lt;/h2&gt;
+      &lt;input 
+        value={input} 
+        onChange={(e) =&gt; setInput(e.target.value)} 
+        placeholder="Add task" 
+      /&gt;
+      &lt;button onClick={addTodo}&gt;Add&lt;/button&gt;
+      &lt;ul&gt;
+        {todos.map((todo, i) =&gt; (
+          &lt;li key={i}&gt;
+            {todo} &lt;button onClick={() =&gt; removeTodo(i)}&gt;Remove&lt;/button&gt;
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default TodoList;</code></pre>
+        </div>
+
+        <!-- App.jsx -->
+        <div class="code-wrapper">
+          <div class="code-header">
+            <span>src/App.jsx</span>
+            <button class="copy-btn" data-clipboard="code-lab6-full-app">Copy File</button>
+          </div>
+          <pre><code id="code-lab6-full-app">import Counter from './Counter';
+import TodoList from './TodoList';
+
+function App() {
+  return (
+    &lt;div style={{ padding: '20px' }}&gt;
+      &lt;h1&gt;React State Management &amp; Events&lt;/h1&gt;
+      &lt;Counter /&gt;
+      &lt;hr style={{ margin: '20px 0' }} /&gt;
+      &lt;TodoList /&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;</code></pre>
+        </div>
       </section>
 
       <!-- Live Counter & Todo Demo -->
