@@ -1,6 +1,6 @@
 /**
  * Full Stack Development Laboratory Manual Reader
- * Supporting Labs 4, 5, and 6
+ * Supporting Labs 4, 5, 6, 7, and 8
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,19 +10,20 @@ document.addEventListener('DOMContentLoaded', () => {
   initFontControls();
   initLab4Demo();
   initLab6Demo();
+  initLab7Demo();
+  initLab8Demo();
 });
 
 /* ==========================================================================
-   1. Tab Navigation for Lab 4, Lab 5, Lab 6
+   1. Tab Navigation for Lab 4, 5, 6, 7, 8
    ========================================================================== */
 
 function initLabTabs() {
   const tabButtons = document.querySelectorAll('.lab-tab-btn');
   const panels = document.querySelectorAll('.lab-panel');
+  const validTargets = ['lab4', 'lab5', 'lab6', 'lab7', 'lab8'];
 
   function switchLab(targetId) {
-    // Validate target
-    const validTargets = ['lab4', 'lab5', 'lab6'];
     if (!validTargets.includes(targetId)) {
       targetId = 'lab4';
     }
@@ -55,7 +56,6 @@ function initLabTabs() {
     btn.addEventListener('click', () => {
       const target = btn.getAttribute('data-target');
       switchLab(target);
-      // Smooth scroll to panel header
       const panel = document.getElementById(`panel-${target}`);
       if (panel) {
         panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -65,14 +65,14 @@ function initLabTabs() {
 
   // Handle URL hash on initial load
   const currentHash = window.location.hash.replace('#', '');
-  if (['lab4', 'lab5', 'lab6'].includes(currentHash)) {
+  if (validTargets.includes(currentHash)) {
     switchLab(currentHash);
   }
 
   // Handle back/forward navigation
   window.addEventListener('hashchange', () => {
     const hash = window.location.hash.replace('#', '');
-    if (['lab4', 'lab5', 'lab6'].includes(hash)) {
+    if (validTargets.includes(hash)) {
       switchLab(hash);
     }
   });
@@ -313,7 +313,6 @@ function initLab6Demo() {
     if (!input) return;
     const taskText = input.value.trim();
     if (taskText) {
-      // Simulate setTodos([...todos, input])
       todosState = [...todosState, taskText];
       input.value = '';
       renderLiveTodoList();
@@ -321,7 +320,6 @@ function initLab6Demo() {
   };
 
   window.handleRemoveTodo = function(index) {
-    // Simulate setTodos(todos.filter((_, i) => i !== index))
     todosState = todosState.filter((_, i) => i !== index);
     renderLiveTodoList();
   };
@@ -347,8 +345,109 @@ function renderLiveTodoList() {
   });
 }
 
+/* ==========================================================================
+   8. Lab 7 Interactive Demo (React API Integration / Axios Simulator)
+   ========================================================================== */
+
+function initLab7Demo() {
+  window.fetchLiveUsers = async function(isError) {
+    const container = document.getElementById('lab7DemoContainer');
+    if (!container) return;
+
+    container.innerHTML = '<p style="color: var(--brand-accent); font-weight: 600;">Loading...</p>';
+
+    const targetUrl = isError 
+      ? 'https://jsonplaceholder.typicode.com/invalid-users-endpoint-simulate-error'
+      : 'https://jsonplaceholder.typicode.com/users';
+
+    try {
+      const res = await fetch(targetUrl);
+      if (!res.ok) {
+        throw new Error('Failed to fetch data.');
+      }
+      const users = await res.json();
+      
+      let html = '<div class="browser-window" style="margin-top: 10px;">';
+      html += '<div class="browser-bar"><span class="browser-dot red"></span><span class="browser-dot yellow"></span><span class="browser-dot green"></span><span class="browser-url">React App Output</span></div>';
+      html += '<div class="browser-body"><h2>User List</h2><div class="api-user-grid">';
+      
+      users.forEach(user => {
+        html += `
+          <div class="api-user-item">
+            <strong>${escapeHTML(user.name)}</strong> | ${escapeHTML(user.email)} | ${escapeHTML(user.address?.city || 'Unknown')}
+          </div>
+        `;
+      });
+      html += '</div></div></div>';
+      container.innerHTML = html;
+    } catch (err) {
+      container.innerHTML = '<div class="browser-window" style="margin-top: 10px;"><div class="browser-body"><p style="color: var(--brand-danger); font-weight: bold;">Failed to fetch data.</p></div></div>';
+    }
+  };
+}
+
+/* ==========================================================================
+   9. Lab 8 Interactive Demo (Node.js HTTP Server Simulator)
+   ========================================================================== */
+
+function initLab8Demo() {
+  window.simulateNodeRequest = function(method, url) {
+    const postBodyContainer = document.getElementById('postBodyContainer');
+    const badge = document.getElementById('serverStatusBadge');
+    const bodyBox = document.getElementById('serverResponseBody');
+
+    // Update active button state
+    document.querySelectorAll('.route-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    if (event && event.currentTarget) {
+      event.currentTarget.classList.add('active');
+    }
+
+    if (method === 'POST') {
+      if (postBodyContainer) postBodyContainer.style.display = 'block';
+      sendCustomPostRequest();
+      return;
+    } else {
+      if (postBodyContainer) postBodyContainer.style.display = 'none';
+    }
+
+    if (method === 'GET' && url === '/') {
+      badge.className = 'status-badge status-200';
+      badge.textContent = '200 OK';
+      bodyBox.textContent = JSON.stringify({ message: 'Welcome to Node.js Server!' }, null, 2);
+    } else if (method === 'GET' && url === '/about') {
+      badge.className = 'status-badge status-200';
+      badge.textContent = '200 OK';
+      bodyBox.textContent = JSON.stringify({ course: 'Full Stack Development', lab: 'Node.js Server' }, null, 2);
+    } else {
+      badge.className = 'status-badge status-404';
+      badge.textContent = '404 Not Found';
+      bodyBox.textContent = JSON.stringify({ error: 'Route not found' }, null, 2);
+    }
+  };
+
+  window.sendCustomPostRequest = function() {
+    const textarea = document.getElementById('postBodyText');
+    const badge = document.getElementById('serverStatusBadge');
+    const bodyBox = document.getElementById('serverResponseBody');
+
+    let parsed = {};
+    try {
+      parsed = JSON.parse(textarea.value);
+    } catch (e) {
+      parsed = { error: 'Invalid JSON entered in client' };
+    }
+
+    badge.className = 'status-badge status-200';
+    badge.textContent = '200 OK';
+    bodyBox.textContent = JSON.stringify({ received: parsed }, null, 2);
+  };
+}
+
 function escapeHTML(str) {
-  return str.replace(/[&<>'"]/g, 
+  if (!str) return '';
+  return String(str).replace(/[&<>'"]/g, 
     tag => ({
       '&': '&amp;',
       '<': '&lt;',
@@ -358,4 +457,3 @@ function escapeHTML(str) {
     }[tag] || tag)
   );
 }
-

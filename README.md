@@ -24,12 +24,24 @@ A responsive, interactive lab manual reader for CMR University's **4CSPL2021: Fu
    - Interactive live Counter and dynamic To-Do List simulator.
    - Complete viva questions and answers.
 
+4. **Lab 7: React - API Integration Using Fetch and Axios**
+   - Fetching REST API data from JSONPlaceholder with `useEffect` and `axios`.
+   - Handling loading state and error states.
+   - Live interactive API simulator with live JSONPlaceholder requests and error handling simulation.
+   - Complete viva questions and answers.
+
+5. **Lab 8: Node.js - Creating a Basic HTTP Server**
+   - Built-in `http` module server handling `GET /`, `GET /about`, and `POST /data`.
+   - Parsing JSON request bodies via data stream events and returning JSON responses with 200/404 HTTP status codes.
+   - Live interactive HTTP server console with Postman simulator.
+   - Complete viva questions and answers.
+
 ---
 
 ## 💻 Tech Stack & Features
 - **Frontend**: HTML5, Modern CSS (`color-scheme: light dark`), Vanilla JavaScript
 - **Features**:
-  - 3-Button quick navigation (Lab 4, Lab 5, Lab 6)
+  - 5-Button quick navigation (Lab 4, Lab 5, Lab 6, Lab 7, Lab 8)
   - One-click code snippet copying
   - Font size adjustment (`A+` / `A−`)
   - Dark / Light mode toggle

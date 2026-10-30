@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Full Stack Development Lab Manual - Labs 4, 5 & 6</title>
+  <title>Full Stack Development Lab Manual - Experiments 4, 5, 6, 7 &amp; 8</title>
   <meta name="color-scheme" content="light dark">
   <script>
     try {
@@ -67,7 +67,7 @@
     </div>
   </header>
 
-  <!-- 3 Primary Navigation Buttons: Lab 4, Lab 5, Lab 6 -->
+  <!-- Primary Navigation Buttons: Lab 4, 5, 6, 7, 8 -->
   <nav class="lab-navigation" aria-label="Lab Manual Navigation">
     <div class="nav-inner container">
       <div class="button-group" role="tablist" aria-label="Laboratory Experiments">
@@ -79,7 +79,7 @@
                 aria-controls="panel-lab4" 
                 data-target="lab4">
           <span class="lab-badge">Exp 04</span>
-          <span class="lab-name">Lab 4: Form Validation Using JS</span>
+          <span class="lab-name">Lab 4: Form Validation (JS)</span>
         </button>
 
         <button type="button" 
@@ -90,7 +90,7 @@
                 aria-controls="panel-lab5" 
                 data-target="lab5">
           <span class="lab-badge">Exp 05</span>
-          <span class="lab-name">Lab 5: React Components &amp; Props</span>
+          <span class="lab-name">Lab 5: React Components</span>
         </button>
 
         <button type="button" 
@@ -102,6 +102,28 @@
                 data-target="lab6">
           <span class="lab-badge">Exp 06</span>
           <span class="lab-name">Lab 6: React State &amp; Events</span>
+        </button>
+
+        <button type="button" 
+                class="lab-tab-btn" 
+                id="btn-lab7" 
+                role="tab" 
+                aria-selected="false" 
+                aria-controls="panel-lab7" 
+                data-target="lab7">
+          <span class="lab-badge">Exp 07</span>
+          <span class="lab-name">Lab 7: React API &amp; Axios</span>
+        </button>
+
+        <button type="button" 
+                class="lab-tab-btn" 
+                id="btn-lab8" 
+                role="tab" 
+                aria-selected="false" 
+                aria-controls="panel-lab8" 
+                data-target="lab8">
+          <span class="lab-badge">Exp 08</span>
+          <span class="lab-name">Lab 8: Node.js HTTP Server</span>
         </button>
       </div>
     </div>
@@ -1038,6 +1060,502 @@ export default App;</code></pre>
 
     </article>
 
+    <!-- ========================================================================= -->
+    <!-- LAB 7 CONTENT -->
+    <!-- ========================================================================= -->
+    <article id="panel-lab7" class="lab-panel" role="tabpanel" aria-labelledby="btn-lab7" hidden>
+      
+      <!-- Lab Header -->
+      <header class="lab-article-header">
+        <div class="exp-meta">
+          <span class="exp-number">Experiment No. 7</span>
+          <span class="exp-date">Date: [ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]</span>
+        </div>
+        <h2 class="exp-title">React - API Integration Using Fetch and Axios</h2>
+      </header>
+
+      <!-- Quick Section Jump Nav -->
+      <nav class="toc-jump-bar" aria-label="Lab 7 Quick Navigation">
+        <a href="#lab7-aim">Aim</a>
+        <a href="#lab7-requirements">Requirements</a>
+        <a href="#lab7-theory">Suggested Reading</a>
+        <a href="#lab7-procedure">Procedure</a>
+        <a href="#lab7-fullcode">Complete Code</a>
+        <a href="#lab7-demo">Live API Demo</a>
+        <a href="#lab7-inferences">Inferences</a>
+        <a href="#lab7-output">Output</a>
+        <a href="#lab7-viva">Viva Questions</a>
+      </nav>
+
+      <!-- Aim -->
+      <section id="lab7-aim" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">🎯</span> Aim</h3>
+        <p class="section-text">
+          To build a React application that fetches data from a public REST API and displays the results dynamically using the <code>useEffect</code> hook.
+        </p>
+      </section>
+
+      <!-- Requirements -->
+      <section id="lab7-requirements" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💻</span> Requirements</h3>
+        <ol class="manual-list">
+          <li>Computer or Laptop with Node.js and npm installed.</li>
+          <li>React project created in Experiment 5.</li>
+          <li>Internet connection to access public APIs.</li>
+          <li>Basic knowledge of React hooks (<code>useState</code>, <code>useEffect</code>) and JavaScript promises.</li>
+        </ol>
+      </section>
+
+      <!-- Suggested Reading -->
+      <section id="lab7-theory" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📚</span> Suggested Reading (Theoretical Background)</h3>
+        <ol class="manual-list">
+          <li>Introduction to REST APIs and JSON data format.</li>
+          <li>JavaScript Fetch API and the <code>async/await</code> syntax.</li>
+          <li>Axios library for HTTP requests.</li>
+          <li>React <code>useEffect</code> hook and its dependency array.</li>
+        </ol>
+      </section>
+
+      <!-- Procedure -->
+      <section id="lab7-procedure" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📝</span> Procedure</h3>
+        <ol class="procedure-list">
+          <li>
+            <p><strong>Step 1:</strong> Open the React project in VS Code.</p>
+          </li>
+          <li>
+            <p><strong>Step 2:</strong> Install Axios in the project using:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>Terminal / Bash</span>
+                <button class="copy-btn" data-clipboard="code-lab7-install">Copy</button>
+              </div>
+              <pre><code id="code-lab7-install">npm install axios</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 3:</strong> Create a new file named <code>UserList.jsx</code> inside the <code>src</code> folder.</p>
+          </li>
+          <li>
+            <p><strong>Step 4:</strong> Write a component that fetches user data from the JSONPlaceholder public API using the <code>useEffect</code> hook:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>src/UserList.jsx</span>
+                <button class="copy-btn" data-clipboard="code-lab7-userlist">Copy</button>
+              </div>
+              <pre><code id="code-lab7-userlist">import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+function UserList() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() =&gt; {
+    axios.get('https://jsonplaceholder.typicode.com/users')
+      .then(response =&gt; {
+        setUsers(response.data);
+        setLoading(false);
+      })
+      .catch(err =&gt; {
+        setError('Failed to fetch data.');
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return &lt;p&gt;Loading...&lt;/p&gt;;
+  if (error) return &lt;p&gt;{error}&lt;/p&gt;;
+
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;User List&lt;/h2&gt;
+      {users.map(user =&gt; (
+        &lt;div key={user.id} style={{ border:'1px solid #ccc', margin:'8px', padding:'8px' }}&gt;
+          &lt;strong&gt;{user.name}&lt;/strong&gt; | {user.email} | {user.address.city}
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
+
+export default UserList;</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 5:</strong> Import and render <code>UserList</code> in <code>App.jsx</code>.</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>src/App.jsx</span>
+                <button class="copy-btn" data-clipboard="code-lab7-app">Copy</button>
+              </div>
+              <pre><code id="code-lab7-app">import UserList from './UserList';
+
+function App() {
+  return (
+    &lt;div style={{ padding: '20px' }}&gt;
+      &lt;h1&gt;React API Integration&lt;/h1&gt;
+      &lt;UserList /&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 6:</strong> Run the application and verify that user data is fetched and displayed.</p>
+          </li>
+          <li>
+            <p><strong>Step 7:</strong> Observe the loading state while data is being fetched.</p>
+          </li>
+          <li>
+            <p><strong>Step 8:</strong> Test error handling by temporarily using an invalid API URL.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Live Interactive Demo -->
+      <section id="lab7-demo" class="manual-section demo-section">
+        <h3 class="section-title"><span class="title-icon">⚡</span> Live API Fetch Simulator (JSONPlaceholder)</h3>
+        <p class="section-text">Simulate the real-time API call to <code>https://jsonplaceholder.typicode.com/users</code>:</p>
+        
+        <div class="interactive-card">
+          <div class="demo-btn-row">
+            <button type="button" class="primary-action-btn" onclick="fetchLiveUsers(false)">Fetch Users (Successful API Call)</button>
+            <button type="button" class="secondary-action-btn" onclick="fetchLiveUsers(true)">Test Error Handling (Invalid URL)</button>
+          </div>
+
+          <div id="lab7DemoContainer" style="margin-top: 18px;">
+            <p style="color: var(--text-muted); font-style: italic;">Click "Fetch Users" above to simulate Axios data fetching.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Inferences -->
+      <section id="lab7-inferences" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💡</span> Inferences</h3>
+        <ol class="manual-list">
+          <li>Understanding how the <code>useEffect</code> hook is used to perform side effects such as API calls in React.</li>
+          <li>Learning how Axios simplifies HTTP requests compared to the native Fetch API.</li>
+          <li>Observing how loading and error states improve the user experience during data fetching.</li>
+          <li>Gaining experience in consuming REST APIs in a React frontend application.</li>
+        </ol>
+      </section>
+
+      <!-- Output -->
+      <section id="lab7-output" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📊</span> Output</h3>
+        <div class="output-box">
+          <p>A React application is built that fetches user data from a public API using Axios and the <code>useEffect</code> hook, and displays the data dynamically in the browser.</p>
+        </div>
+      </section>
+
+      <!-- Viva Questions -->
+      <section id="lab7-viva" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💬</span> Viva Questions &amp; Answers</h3>
+        <div class="viva-accordion">
+          
+          <details class="viva-item" open>
+            <summary class="viva-q">1. What is the useEffect hook in React?</summary>
+            <div class="viva-a">
+              <p><code>useEffect</code> is a built-in React hook that lets functional components perform side effects, such as data fetching, subscriptions, timers, and manual DOM manipulations after rendering.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">2. What is the purpose of the dependency array in useEffect?</summary>
+            <div class="viva-a">
+              <p>The dependency array tells React when to re-run the effect. An empty array <code>[]</code> runs the effect only once when the component mounts. Passing variables (e.g. <code>[id]</code>) runs the effect whenever those variables change. Omitting the array causes the effect to run after every single render.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">3. What is the difference between Fetch API and Axios?</summary>
+            <div class="viva-a">
+              <p>The <strong>Fetch API</strong> is built into browsers; it requires a manual JSON parsing step (<code>res.json()</code>) and doesn't reject HTTP error codes like 404/500 automatically. <strong>Axios</strong> is a third-party library that automatically parses JSON into <code>response.data</code>, automatically throws errors on 4xx/5xx responses, and supports interceptors and request cancellation.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">4. What is a REST API?</summary>
+            <div class="viva-a">
+              <p>REST (Representational State Transfer) is an architectural style for designing networked applications. It uses standard HTTP methods (GET, POST, PUT, DELETE) to perform stateless CRUD operations on resources identified by URIs, typically transferring data formatted as JSON.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">5. How does async/await work in JavaScript?</summary>
+            <div class="viva-a">
+              <p><code>async/await</code> is syntactic sugar built on top of JavaScript Promises. Declaring a function <code>async</code> ensures it returns a Promise. The <code>await</code> keyword pauses execution until the Promise resolves or rejects, making asynchronous code read like clean synchronous code.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">6. What is JSON and how is it used in web applications?</summary>
+            <div class="viva-a">
+              <p>JSON (JavaScript Object Notation) is a lightweight, human-readable data-interchange format. It is language-independent and serves as the universal standard for exchanging structured data between client frontends and server backends over HTTP.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">7. Why should API calls be placed inside useEffect?</summary>
+            <div class="viva-a">
+              <p>Placing API calls directly inside the main body of a component would cause the request to fire on every re-render, creating an infinite network loop. Putting the call inside <code>useEffect</code> with an empty dependency array <code>[]</code> ensures it runs only once after the component mounts.</p>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+    </article>
+
+    <!-- ========================================================================= -->
+    <!-- LAB 8 CONTENT -->
+    <!-- ========================================================================= -->
+    <article id="panel-lab8" class="lab-panel" role="tabpanel" aria-labelledby="btn-lab8" hidden>
+      
+      <!-- Lab Header -->
+      <header class="lab-article-header">
+        <div class="exp-meta">
+          <span class="exp-number">Experiment No. 8</span>
+          <span class="exp-date">Date: [ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]</span>
+        </div>
+        <h2 class="exp-title">Node.js - Creating a Basic HTTP Server</h2>
+      </header>
+
+      <!-- Quick Section Jump Nav -->
+      <nav class="toc-jump-bar" aria-label="Lab 8 Quick Navigation">
+        <a href="#lab8-aim">Aim</a>
+        <a href="#lab8-requirements">Requirements</a>
+        <a href="#lab8-theory">Suggested Reading</a>
+        <a href="#lab8-procedure">Procedure</a>
+        <a href="#lab8-fullcode">Complete Code</a>
+        <a href="#lab8-demo">Interactive Server Console</a>
+        <a href="#lab8-inferences">Inferences</a>
+        <a href="#lab8-output">Output</a>
+        <a href="#lab8-viva">Viva Questions</a>
+      </nav>
+
+      <!-- Aim -->
+      <section id="lab8-aim" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">🎯</span> Aim</h3>
+        <p class="section-text">
+          To create and run a basic HTTP server using Node.js that handles GET and POST requests and sends appropriate responses.
+        </p>
+      </section>
+
+      <!-- Requirements -->
+      <section id="lab8-requirements" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💻</span> Requirements</h3>
+        <ol class="manual-list">
+          <li>Computer or Laptop with Node.js installed.</li>
+          <li>Visual Studio Code editor.</li>
+          <li>Postman or a web browser for testing HTTP requests.</li>
+          <li>Basic knowledge of HTTP methods and Node.js modules.</li>
+        </ol>
+      </section>
+
+      <!-- Suggested Reading -->
+      <section id="lab8-theory" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📚</span> Suggested Reading (Theoretical Background)</h3>
+        <ol class="manual-list">
+          <li>Introduction to Node.js and its event-driven, non-blocking architecture.</li>
+          <li>Node.js built-in <code>http</code> module and its methods.</li>
+          <li>HTTP request and response objects.</li>
+          <li>Difference between GET and POST HTTP methods.</li>
+        </ol>
+      </section>
+
+      <!-- Procedure -->
+      <section id="lab8-procedure" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📝</span> Procedure</h3>
+        <ol class="procedure-list">
+          <li>
+            <p><strong>Step 1:</strong> Create a new folder named <code>node_lab</code> and open it in VS Code.</p>
+          </li>
+          <li>
+            <p><strong>Step 2:</strong> Create a file named <code>server.js</code> inside the folder.</p>
+          </li>
+          <li>
+            <p><strong>Step 3:</strong> Write the following code to create a basic HTTP server:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>server.js</span>
+                <button class="copy-btn" data-clipboard="code-lab8-server">Copy</button>
+              </div>
+              <pre><code id="code-lab8-server">const http = require('http');
+
+const server = http.createServer((req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  if (req.method === 'GET' && req.url === '/') {
+    res.writeHead(200);
+    res.end(JSON.stringify({ message: 'Welcome to Node.js Server!' }));
+  } else if (req.method === 'GET' && req.url === '/about') {
+    res.writeHead(200);
+    res.end(JSON.stringify({ course: 'Full Stack Development', lab: 'Node.js Server' }));
+  } else if (req.method === 'POST' && req.url === '/data') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', () => {
+      res.writeHead(200);
+      res.end(JSON.stringify({ received: JSON.parse(body) }));
+    });
+  } else {
+    res.writeHead(404);
+    res.end(JSON.stringify({ error: 'Route not found' }));
+  }
+});
+
+server.listen(3000, () => {
+  console.log('Server running at http://localhost:3000');
+});</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 4:</strong> Run the server using:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>Terminal / Command Prompt</span>
+                <button class="copy-btn" data-clipboard="code-lab8-run">Copy</button>
+              </div>
+              <pre><code id="code-lab8-run">node server.js</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 5:</strong> Open a browser and visit <code>http://localhost:3000</code> to test the <code>GET /</code> route.</p>
+          </li>
+          <li>
+            <p><strong>Step 6:</strong> Visit <code>http://localhost:3000/about</code> to test the <code>GET /about</code> route.</p>
+          </li>
+          <li>
+            <p><strong>Step 7:</strong> Use Postman to send a POST request to <code>http://localhost:3000/data</code> with a JSON body.</p>
+          </li>
+          <li>
+            <p><strong>Step 8:</strong> Observe and verify the responses for each route including the 404 response for unknown routes.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Live Interactive Demo: Server & Postman Simulator -->
+      <section id="lab8-demo" class="manual-section demo-section">
+        <h3 class="section-title"><span class="title-icon">⚡</span> Interactive Node.js HTTP Server &amp; Postman Simulator</h3>
+        <p class="section-text">Test all routes configured in <code>server.js</code> right from this web console:</p>
+        
+        <div class="interactive-card">
+          <div class="route-selector-row">
+            <button type="button" class="route-btn active" onclick="simulateNodeRequest('GET', '/')">
+              <span class="method-tag get">GET</span> /
+            </button>
+            <button type="button" class="route-btn" onclick="simulateNodeRequest('GET', '/about')">
+              <span class="method-tag get">GET</span> /about
+            </button>
+            <button type="button" class="route-btn" onclick="simulateNodeRequest('POST', '/data')">
+              <span class="method-tag post">POST</span> /data
+            </button>
+            <button type="button" class="route-btn" onclick="simulateNodeRequest('GET', '/unknown')">
+              <span class="method-tag get">GET</span> /invalid-route
+            </button>
+          </div>
+
+          <!-- POST body input if POST is chosen -->
+          <div id="postBodyContainer" style="display: none; margin-bottom: 12px;">
+            <label for="postBodyText" style="font-weight: 700; font-size: 0.85rem; display: block; margin-bottom: 4px;">POST Request Body (JSON):</label>
+            <textarea id="postBodyText" rows="3" style="width: 100%; font-family: var(--font-mono); font-size: 0.88rem; padding: 8px;">{ "student": "Rohit Kumar", "status": "active" }</textarea>
+            <button type="button" class="primary-action-btn" style="margin-top: 6px;" onclick="sendCustomPostRequest()">Send POST /data</button>
+          </div>
+
+          <div class="server-console-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px;">
+              <span>HTTP Response Inspector</span>
+              <span id="serverStatusBadge" class="status-badge status-200">200 OK</span>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.82rem; margin-bottom: 4px;">Headers: Content-Type: application/json</p>
+            <pre style="margin: 0; background: transparent; padding: 0;"><code id="serverResponseBody">{
+  "message": "Welcome to Node.js Server!"
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Inferences -->
+      <section id="lab8-inferences" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💡</span> Inferences</h3>
+        <ol class="manual-list">
+          <li>Understanding how Node.js handles HTTP requests using the built-in <code>http</code> module.</li>
+          <li>Learning how to differentiate routes based on the request method and URL.</li>
+          <li>Observing how Node.js processes POST request body data using events.</li>
+          <li>Gaining experience in creating and running a backend server using Node.js.</li>
+        </ol>
+      </section>
+
+      <!-- Output -->
+      <section id="lab8-output" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📊</span> Output</h3>
+        <div class="output-box">
+          <p>A basic Node.js HTTP server is created that successfully handles GET and POST requests and returns appropriate JSON responses.</p>
+        </div>
+      </section>
+
+      <!-- Viva Questions -->
+      <section id="lab8-viva" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💬</span> Viva Questions &amp; Answers</h3>
+        <div class="viva-accordion">
+          
+          <details class="viva-item" open>
+            <summary class="viva-q">1. What is Node.js and why is it used for backend development?</summary>
+            <div class="viva-a">
+              <p>Node.js is an open-source, cross-platform JavaScript runtime environment built on Google Chrome's V8 engine. It allows developers to run JavaScript on the server. Its asynchronous, non-blocking, event-driven architecture makes it lightweight, highly scalable, and efficient for I/O-heavy applications like web servers and APIs.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">2. What is the http module in Node.js?</summary>
+            <div class="viva-a">
+              <p>The built-in <code>http</code> module provides classes and utilities to create HTTP servers and clients without external libraries. Using <code>http.createServer((req, res) => { ... })</code>, developers can listen for incoming HTTP connections, parse request headers and URLs, and dispatch responses.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">3. What is the difference between GET and POST HTTP methods?</summary>
+            <div class="viva-a">
+              <p><strong>GET</strong> requests retrieve data from a server; parameters are appended directly in the URL query string, making it idempotent and cacheable. <strong>POST</strong> requests submit data to the server inside the HTTP message body; it is used for state-changing operations (such as creating records or submitting forms), and is not cached.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">4. What is the purpose of res.writeHead and res.end?</summary>
+            <div class="viva-a">
+              <p><code>res.writeHead(statusCode, [headers])</code> sends an HTTP response status code (e.g. 200, 404) and response headers to the client. <code>res.end([data])</code> signals to the server that all response headers and body content have been sent, closing the HTTP connection stream.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">5. What is an event-driven architecture?</summary>
+            <div class="viva-a">
+              <p>In Node.js, the event-driven architecture uses an event loop where objects called EventEmitters emit named events that trigger registered callback listeners. When an asynchronous operation (like incoming TCP stream data) completes, an event is placed on the event queue to be processed without blocking the single execution thread.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">6. What does JSON.stringify and JSON.parse do?</summary>
+            <div class="viva-a">
+              <p><code>JSON.stringify(object)</code> serializes a JavaScript object or value into a JSON-formatted string (essential when transmitting data over HTTP). <code>JSON.parse(string)</code> deserializes a valid JSON string back into a JavaScript object or array.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">7. What is the difference between synchronous and asynchronous programming in Node.js?</summary>
+            <div class="viva-a">
+              <p><strong>Synchronous programming</strong> is blocking: code executes sequentially line-by-line, halting the thread until each task finishes. <strong>Asynchronous programming</strong> is non-blocking: time-consuming operations (file I/O, network requests, database queries) are delegated to the libuv threadpool or OS, allowing Node's single thread to continue handling other requests concurrently until a callback or promise resolves.</p>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+    </article>
+
   </main>
 
   <!-- Sticky Floating Footer -->
@@ -1053,4 +1571,3 @@ export default App;</code></pre>
   <script src="script.js"></script>
 </body>
 </html>
-
