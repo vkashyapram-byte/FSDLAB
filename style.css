@@ -909,6 +909,102 @@ p code, li code {
 .status-badge.status-404 { background: var(--brand-danger-bg); color: var(--brand-danger); border: 1px solid var(--brand-danger); }
 
 /* ==========================================================================
+   Lab 9 & 10 Interactive Simulators Styling
+   ========================================================================== */
+
+/* Lab 9: File System Simulator */
+.fs-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.fs-action-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.fs-action-btn:hover {
+  background: var(--brand-accent-light);
+  border-color: var(--brand-accent);
+  color: var(--brand-accent);
+}
+
+.fs-split-view {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.fs-file-panel, .fs-console-panel {
+  background: var(--bg-code);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #e2e8f0;
+}
+
+.fs-panel-title {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  color: #94a3b8;
+  font-weight: 700;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.fs-file-content {
+  white-space: pre-wrap;
+  color: #38bdf8;
+  min-height: 120px;
+}
+
+.fs-console-log {
+  white-space: pre-wrap;
+  color: #a7f3d0;
+  min-height: 120px;
+}
+
+/* Lab 10: Express Logger Box */
+.logger-output-box {
+  background: #090d16;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #facc15;
+  margin-top: 10px;
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+.log-entry {
+  margin-bottom: 4px;
+}
+.log-entry:last-child {
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
    Viva Accordion
    ========================================================================== */
 

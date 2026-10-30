@@ -125,6 +125,28 @@
           <span class="lab-badge">Exp 08</span>
           <span class="lab-name">Lab 8: Node.js HTTP Server</span>
         </button>
+
+        <button type="button" 
+                class="lab-tab-btn" 
+                id="btn-lab9" 
+                role="tab" 
+                aria-selected="false" 
+                aria-controls="panel-lab9" 
+                data-target="lab9">
+          <span class="lab-badge">Exp 09</span>
+          <span class="lab-name">Lab 9: Node.js File System</span>
+        </button>
+
+        <button type="button" 
+                class="lab-tab-btn" 
+                id="btn-lab10" 
+                role="tab" 
+                aria-selected="false" 
+                aria-controls="panel-lab10" 
+                data-target="lab10">
+          <span class="lab-badge">Exp 10</span>
+          <span class="lab-name">Lab 10: Express Routing</span>
+        </button>
       </div>
     </div>
   </nav>
@@ -1711,6 +1733,644 @@ server.listen(3000, () => {
             <summary class="viva-q">7. What is the difference between synchronous and asynchronous programming in Node.js?</summary>
             <div class="viva-a">
               <p><strong>Synchronous programming</strong> is blocking: code executes sequentially line-by-line, halting the thread until each task finishes. <strong>Asynchronous programming</strong> is non-blocking: time-consuming operations (file I/O, network requests, database queries) are delegated to the libuv threadpool or OS, allowing Node's single thread to continue handling other requests concurrently until a callback or promise resolves.</p>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+    </article>
+
+    <!-- ========================================================================= -->
+    <!-- LAB 9 CONTENT -->
+    <!-- ========================================================================= -->
+    <article id="panel-lab9" class="lab-panel" role="tabpanel" aria-labelledby="btn-lab9" hidden>
+      
+      <!-- Lab Header -->
+      <header class="lab-article-header">
+        <div class="exp-meta">
+          <span class="exp-number">Experiment No. 9</span>
+          <span class="exp-date">Date: [ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]</span>
+        </div>
+        <h2 class="exp-title">Node.js - File System Operations</h2>
+      </header>
+
+      <!-- Quick Section Jump Nav -->
+      <nav class="toc-jump-bar" aria-label="Lab 9 Quick Navigation">
+        <a href="#lab9-aim">Aim</a>
+        <a href="#lab9-requirements">Requirements</a>
+        <a href="#lab9-theory">Suggested Reading</a>
+        <a href="#lab9-procedure">Procedure</a>
+        <a href="#lab9-fullcode">Complete Code</a>
+        <a href="#lab9-demo">Virtual File Simulator</a>
+        <a href="#lab9-inferences">Inferences</a>
+        <a href="#lab9-output">Output</a>
+        <a href="#lab9-viva">Viva Questions</a>
+      </nav>
+
+      <!-- Aim -->
+      <section id="lab9-aim" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">🎯</span> Aim</h3>
+        <p class="section-text">
+          To implement file read, write, append, and delete operations using the Node.js built-in <code>fs</code> module.
+        </p>
+      </section>
+
+      <!-- Requirements -->
+      <section id="lab9-requirements" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💻</span> Requirements</h3>
+        <ol class="manual-list">
+          <li>Computer or Laptop with Node.js installed.</li>
+          <li>Visual Studio Code editor.</li>
+          <li>Terminal or Command Prompt.</li>
+          <li>Basic knowledge of Node.js modules and callbacks.</li>
+        </ol>
+      </section>
+
+      <!-- Suggested Reading -->
+      <section id="lab9-theory" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📚</span> Suggested Reading (Theoretical Background)</h3>
+        <ol class="manual-list">
+          <li>Node.js <code>fs</code> module and its methods.</li>
+          <li>Difference between synchronous and asynchronous file operations.</li>
+          <li>Callbacks and promises in Node.js.</li>
+          <li>Importance of file system operations in backend applications.</li>
+        </ol>
+      </section>
+
+      <!-- Procedure -->
+      <section id="lab9-procedure" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📝</span> Procedure</h3>
+        <ol class="procedure-list">
+          <li>
+            <p><strong>Step 1:</strong> Create a new file named <code>fileops.js</code> inside the <code>node_lab</code> folder.</p>
+          </li>
+          <li>
+            <p><strong>Step 2:</strong> Write the following code to perform file system operations:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>JavaScript • fs File Operations</span>
+                <button class="copy-btn" data-clipboard="code-lab9-step2">Copy</button>
+              </div>
+              <pre><code id="code-lab9-step2">const fs = require('fs');
+
+// Write to a file
+fs.writeFile('students.txt', 'Student 1: Rohit Kumar\nStudent 2: Ananya Sharma\n', (err) => {
+  if (err) throw err;
+  console.log('File written successfully.');
+});
+
+// Read from the file
+fs.readFile('students.txt', 'utf8', (err, data) => {
+  if (err) throw err;
+  console.log('File Content:\n' + data);
+});
+
+// Append data to the file
+fs.appendFile('students.txt', 'Student 3: Vikram Rao\n', (err) => {
+  if (err) throw err;
+  console.log('Data appended successfully.');
+});</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 3:</strong> Run the file using:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>Terminal / Command Prompt</span>
+                <button class="copy-btn" data-clipboard="code-lab9-run">Copy</button>
+              </div>
+              <pre><code id="code-lab9-run">node fileops.js</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 4:</strong> Verify the creation and content of <code>students.txt</code> in the project folder.</p>
+          </li>
+          <li>
+            <p><strong>Step 5:</strong> Add the following code to check if a file exists and delete it:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>JavaScript • File Existence &amp; Deletion</span>
+                <button class="copy-btn" data-clipboard="code-lab9-step5">Copy</button>
+              </div>
+              <pre><code id="code-lab9-step5">fs.access('students.txt', fs.constants.F_OK, (err) => {
+  if (!err) {
+    fs.unlink('students.txt', (err) => {
+      if (err) throw err;
+      console.log('File deleted successfully.');
+    });
+  }
+});</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 6:</strong> Use <code>fs.renameSync</code> to rename a file synchronously:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>JavaScript • Synchronous Rename</span>
+                <button class="copy-btn" data-clipboard="code-lab9-step6">Copy</button>
+              </div>
+              <pre><code id="code-lab9-step6">fs.writeFileSync('temp.txt', 'Temporary file');
+fs.renameSync('temp.txt', 'renamed_temp.txt');
+console.log('File renamed successfully.');</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 7:</strong> Run the updated file and observe the outputs of each operation in the terminal.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Complete Runnable File Box -->
+      <section id="lab9-fullcode" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📄</span> Complete Source Code: <code>fileops.js</code></h3>
+        <p class="section-text">The full complete file system operations script combining all asynchronous and synchronous operations:</p>
+        <div class="code-wrapper">
+          <div class="code-header">
+            <span>node_lab/fileops.js</span>
+            <button class="copy-btn" data-clipboard="code-lab9-full">Copy File</button>
+          </div>
+          <pre><code id="code-lab9-full">const fs = require('fs');
+
+// Write to a file
+fs.writeFile('students.txt', 'Student 1: Rohit Kumar\nStudent 2: Ananya Sharma\n', (err) => {
+  if (err) throw err;
+  console.log('File written successfully.');
+});
+
+// Read from the file
+fs.readFile('students.txt', 'utf8', (err, data) => {
+  if (err) throw err;
+  console.log('File Content:\n' + data);
+});
+
+// Append data to the file
+fs.appendFile('students.txt', 'Student 3: Vikram Rao\n', (err) => {
+  if (err) throw err;
+  console.log('Data appended successfully.');
+});
+
+// Check if a file exists and delete it
+fs.access('students.txt', fs.constants.F_OK, (err) => {
+  if (!err) {
+    fs.unlink('students.txt', (err) => {
+      if (err) throw err;
+      console.log('File deleted successfully.');
+    });
+  }
+});
+
+// Synchronous write and rename
+fs.writeFileSync('temp.txt', 'Temporary file');
+fs.renameSync('temp.txt', 'renamed_temp.txt');
+console.log('File renamed successfully.');</code></pre>
+        </div>
+      </section>
+
+      <!-- Live Interactive Demo -->
+      <section id="lab9-demo" class="manual-section demo-section">
+        <h3 class="section-title"><span class="title-icon">⚡</span> Interactive Node.js File System Simulator</h3>
+        <p class="section-text">Execute each <code>fs</code> method step-by-step and inspect the virtual file contents and terminal output:</p>
+        
+        <div class="interactive-card">
+          <div class="fs-action-row">
+            <button type="button" class="fs-action-btn" onclick="executeFsAction('write')">
+              <span>✍️</span> fs.writeFile()
+            </button>
+            <button type="button" class="fs-action-btn" onclick="executeFsAction('read')">
+              <span>📖</span> fs.readFile()
+            </button>
+            <button type="button" class="fs-action-btn" onclick="executeFsAction('append')">
+              <span>➕</span> fs.appendFile()
+            </button>
+            <button type="button" class="fs-action-btn" onclick="executeFsAction('delete')">
+              <span>🗑️</span> fs.unlink()
+            </button>
+            <button type="button" class="fs-action-btn" onclick="executeFsAction('rename')">
+              <span>🔄</span> fs.renameSync()
+            </button>
+            <button type="button" class="secondary-action-btn" onclick="resetFsSimulator()">
+              Reset Simulator
+            </button>
+          </div>
+
+          <div class="fs-split-view">
+            <div class="fs-file-panel">
+              <div class="fs-panel-title">
+                <span>Virtual File: students.txt</span>
+                <span id="vfsFileState" style="color: var(--brand-accent);">File exists</span>
+              </div>
+              <div id="vfsFileContent" class="fs-file-content">Student 1: Rohit Kumar
+Student 2: Ananya Sharma</div>
+            </div>
+
+            <div class="fs-console-panel">
+              <div class="fs-panel-title">
+                <span>Terminal Stdout</span>
+                <span>Node.js</span>
+              </div>
+              <div id="vfsConsoleLog" class="fs-console-log">Ready. Click any fs operation above to execute.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Inferences -->
+      <section id="lab9-inferences" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💡</span> Inferences</h3>
+        <ol class="manual-list">
+          <li>Understanding how Node.js interacts with the file system using the <code>fs</code> module.</li>
+          <li>Learning the difference between asynchronous (callback-based) and synchronous file operations.</li>
+          <li>Observing how files are created, read, modified, and deleted programmatically.</li>
+          <li>Gaining experience in handling file system operations in backend Node.js applications.</li>
+        </ol>
+      </section>
+
+      <!-- Output -->
+      <section id="lab9-output" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📊</span> Output</h3>
+        <div class="output-box">
+          <p>File system operations including write, read, append, delete, and rename are successfully implemented and verified using Node.js.</p>
+        </div>
+      </section>
+
+      <!-- Viva Questions -->
+      <section id="lab9-viva" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💬</span> Viva Questions &amp; Answers</h3>
+        <div class="viva-accordion">
+          
+          <details class="viva-item" open>
+            <summary class="viva-q">1. What is the fs module in Node.js?</summary>
+            <div class="viva-a">
+              <p>The <code>fs</code> (File System) module is a core built-in module in Node.js that enables applications to interact with the host file system. It provides methods for creating, reading, updating, renaming, deleting, and watching files and directories.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">2. What is the difference between readFile and readFileSync?</summary>
+            <div class="viva-a">
+              <p><code>fs.readFile</code> is <strong>asynchronous</strong> and non-blocking; it offloads reading to the background threadpool and invokes a callback or returns a Promise when finished, leaving the main thread free. <code>fs.readFileSync</code> is <strong>synchronous</strong> and blocking; it halts script execution until the entire file is loaded into memory.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">3. What does the appendFile method do?</summary>
+            <div class="viva-a">
+              <p><code>fs.appendFile</code> asynchronously appends specified data to the end of a file. If the targeted file does not already exist, Node automatically creates it before appending the content.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">4. How is a file deleted using the fs module?</summary>
+            <div class="viva-a">
+              <p>A file is deleted using <code>fs.unlink(path, callback)</code> (asynchronous) or <code>fs.unlinkSync(path)</code> (synchronous). It removes the file link from the filesystem directory.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">5. What are callbacks in Node.js?</summary>
+            <div class="viva-a">
+              <p>Callbacks are functions passed as arguments to asynchronous methods that are called once the asynchronous background task completes. In Node.js, standard callbacks follow the error-first pattern: <code>(err, result) => { ... }</code>.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">6. What is the difference between fs.writeFile and fs.writeFileSync?</summary>
+            <div class="viva-a">
+              <p><code>fs.writeFile</code> writes data to a file asynchronously without stopping the JavaScript event loop, notifying completion via an error-first callback. <code>fs.writeFileSync</code> executes synchronously, freezing code execution until the write operation has completely finished.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">7. Why is asynchronous file handling preferred in Node.js?</summary>
+            <div class="viva-a">
+              <p>Node.js runs on a single execution thread for user JavaScript code. Asynchronous file handling prevents I/O operations from blocking this thread, allowing the server to handle thousands of concurrent requests smoothly and maintain high system throughput.</p>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+    </article>
+
+    <!-- ========================================================================= -->
+    <!-- LAB 10 CONTENT -->
+    <!-- ========================================================================= -->
+    <article id="panel-lab10" class="lab-panel" role="tabpanel" aria-labelledby="btn-lab10" hidden>
+      
+      <!-- Lab Header -->
+      <header class="lab-article-header">
+        <div class="exp-meta">
+          <span class="exp-number">Experiment No. 10</span>
+          <span class="exp-date">Date: [ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]</span>
+        </div>
+        <h2 class="exp-title">Express.js - Routing and Middleware</h2>
+      </header>
+
+      <!-- Quick Section Jump Nav -->
+      <nav class="toc-jump-bar" aria-label="Lab 10 Quick Navigation">
+        <a href="#lab10-aim">Aim</a>
+        <a href="#lab10-requirements">Requirements</a>
+        <a href="#lab10-theory">Suggested Reading</a>
+        <a href="#lab10-procedure">Procedure</a>
+        <a href="#lab10-fullcode">Complete Code</a>
+        <a href="#lab10-demo">Route &amp; Logger Tester</a>
+        <a href="#lab10-inferences">Inferences</a>
+        <a href="#lab10-output">Output</a>
+        <a href="#lab10-viva">Viva Questions</a>
+      </nav>
+
+      <!-- Aim -->
+      <section id="lab10-aim" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">🎯</span> Aim</h3>
+        <p class="section-text">
+          To develop a web application using Express.js that demonstrates routing with route parameters, query strings, and middleware functions.
+        </p>
+      </section>
+
+      <!-- Requirements -->
+      <section id="lab10-requirements" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💻</span> Requirements</h3>
+        <ol class="manual-list">
+          <li>Computer or Laptop with Node.js and npm installed.</li>
+          <li>Visual Studio Code editor.</li>
+          <li>Postman for testing API routes.</li>
+          <li>Basic knowledge of Node.js and HTTP methods.</li>
+        </ol>
+      </section>
+
+      <!-- Suggested Reading -->
+      <section id="lab10-theory" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📚</span> Suggested Reading (Theoretical Background)</h3>
+        <ol class="manual-list">
+          <li>Introduction to Express.js and its advantages over the built-in <code>http</code> module.</li>
+          <li>Express.js routing: <code>app.get()</code>, <code>app.post()</code>, <code>app.put()</code>, <code>app.delete()</code>.</li>
+          <li>Route parameters and query strings in Express.js.</li>
+          <li>Middleware functions and the <code>next()</code> function in Express.js.</li>
+        </ol>
+      </section>
+
+      <!-- Procedure -->
+      <section id="lab10-procedure" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📝</span> Procedure</h3>
+        <ol class="procedure-list">
+          <li>
+            <p><strong>Step 1:</strong> Create a new folder named <code>express_lab</code> and open it in VS Code.</p>
+          </li>
+          <li>
+            <p><strong>Step 2:</strong> Initialize a Node.js project and install Express:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>Terminal / Bash</span>
+                <button class="copy-btn" data-clipboard="code-lab10-npm">Copy</button>
+              </div>
+              <pre><code id="code-lab10-npm">npm init -y
+npm install express</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 3:</strong> Create a file named <code>app.js</code> inside the <code>express_lab</code> folder.</p>
+          </li>
+          <li>
+            <p><strong>Step 4:</strong> Write the following Express.js application:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>express_lab/app.js</span>
+                <button class="copy-btn" data-clipboard="code-lab10-step4">Copy</button>
+              </div>
+              <pre><code id="code-lab10-step4">const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+// Logger middleware
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url} - ${new Date().toISOString()}`);
+  next();
+});
+
+// Home route
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome to Express.js Lab!' });
+});
+
+// Route with parameter
+app.get('/students/:id', (req, res) => {
+  res.json({ studentId: req.params.id, message: 'Student details fetched' });
+});
+
+// Route with query string
+app.get('/search', (req, res) => {
+  const { name, dept } = req.query;
+  res.json({ search: { name, dept }, message: 'Search results' });
+});
+
+app.listen(3001, () => console.log('Express server running on port 3001'));</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 5:</strong> Run the application using:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>Terminal / Command Prompt</span>
+                <button class="copy-btn" data-clipboard="code-lab10-run">Copy</button>
+              </div>
+              <pre><code id="code-lab10-run">node app.js</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 6:</strong> Use Postman or browser to test the following routes:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>Endpoints to Test</span>
+                <button class="copy-btn" data-clipboard="code-lab10-routes">Copy</button>
+              </div>
+              <pre><code id="code-lab10-routes">GET http://localhost:3001/
+GET http://localhost:3001/students/101
+GET http://localhost:3001/search?name=Rohit&dept=CSE</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 7:</strong> Observe how the logger middleware logs each request.</p>
+          </li>
+          <li>
+            <p><strong>Step 8:</strong> Observe how route parameters and query strings are extracted from the request.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Complete Runnable File Box -->
+      <section id="lab10-fullcode" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📄</span> Complete Source Code: <code>app.js</code></h3>
+        <p class="section-text">The full production-ready Express.js server incorporating the logger middleware, static and parametrized routes, and query string handlers:</p>
+        <div class="code-wrapper">
+          <div class="code-header">
+            <span>express_lab/app.js</span>
+            <button class="copy-btn" data-clipboard="code-lab10-full">Copy File</button>
+          </div>
+          <pre><code id="code-lab10-full">const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+// Logger middleware
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url} - ${new Date().toISOString()}`);
+  next();
+});
+
+// Home route
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome to Express.js Lab!' });
+});
+
+// Route with parameter
+app.get('/students/:id', (req, res) => {
+  res.json({ studentId: req.params.id, message: 'Student details fetched' });
+});
+
+// Route with query string
+app.get('/search', (req, res) => {
+  const { name, dept } = req.query;
+  res.json({ search: { name, dept }, message: 'Search results' });
+});
+
+app.listen(3001, () => console.log('Express server running on port 3001'));</code></pre>
+        </div>
+      </section>
+
+      <!-- Live Interactive Demo -->
+      <section id="lab10-demo" class="manual-section demo-section">
+        <h3 class="section-title"><span class="title-icon">⚡</span> Interactive Express Routing &amp; Logger Simulator</h3>
+        <p class="section-text">Dispatch requests to the Express server routes and observe both JSON response data and the middleware terminal log:</p>
+        
+        <div class="interactive-card">
+          <!-- Route Control Buttons -->
+          <div class="route-selector-row">
+            <button type="button" class="route-btn active" id="btnExpRouteHome" onclick="triggerExpressDemo('home')">
+              <span class="method-tag get">GET</span> / (Home)
+            </button>
+            <button type="button" class="route-btn" id="btnExpRouteParam" onclick="triggerExpressDemo('param')">
+              <span class="method-tag get">GET</span> /students/:id
+            </button>
+            <button type="button" class="route-btn" id="btnExpRouteQuery" onclick="triggerExpressDemo('query')">
+              <span class="method-tag get">GET</span> /search?name=...&amp;dept=...
+            </button>
+          </div>
+
+          <!-- Parameter & Query Controls -->
+          <div id="expressParamControls" style="display: none; margin-bottom: 14px;">
+            <div class="demo-field" style="max-width: 250px;">
+              <label for="expStudentIdInput">Route Param <code>:id</code>:</label>
+              <input type="text" id="expStudentIdInput" value="101" oninput="triggerExpressDemo('param')">
+            </div>
+          </div>
+
+          <div id="expressQueryControls" style="display: none; margin-bottom: 14px;">
+            <div class="demo-form-grid" style="margin-bottom: 0;">
+              <div class="demo-field">
+                <label for="expQueryName">Query Param <code>name</code>:</label>
+                <input type="text" id="expQueryName" value="Rohit" oninput="triggerExpressDemo('query')">
+              </div>
+              <div class="demo-field">
+                <label for="expQueryDept">Query Param <code>dept</code>:</label>
+                <input type="text" id="expQueryDept" value="CSE" oninput="triggerExpressDemo('query')">
+              </div>
+            </div>
+          </div>
+
+          <!-- Server JSON Response Box -->
+          <div class="server-console-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px;">
+              <span id="expCurrentUrlLabel">Endpoint: GET http://localhost:3001/</span>
+              <span class="status-badge status-200">200 OK</span>
+            </div>
+            <pre style="margin: 0; background: transparent; padding: 0;"><code id="expResponseBody">{
+  "message": "Welcome to Express.js Lab!"
+}</code></pre>
+          </div>
+
+          <!-- Logger Middleware Terminal Window -->
+          <h4 style="font-size: 0.92rem; margin-top: 16px; margin-bottom: 6px; color: var(--text-primary);">
+            🖥️ Terminal Stdout (Generated by Logger Middleware: <code>app.use(...)</code>):
+          </h4>
+          <div class="logger-output-box" id="expressLoggerWindow">
+            <div class="log-entry">Express server running on port 3001</div>
+            <div class="log-entry">GET / - 2026-10-30T04:45:00.000Z</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Inferences -->
+      <section id="lab10-inferences" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💡</span> Inferences</h3>
+        <ol class="manual-list">
+          <li>Understanding how Express.js simplifies the creation of web servers and routing.</li>
+          <li>Learning how middleware functions process requests before they reach route handlers.</li>
+          <li>Observing how route parameters allow dynamic URLs in Express.js.</li>
+          <li>Gaining experience in building and testing RESTful routes using Express.js.</li>
+        </ol>
+      </section>
+
+      <!-- Output -->
+      <section id="lab10-output" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📊</span> Output</h3>
+        <div class="output-box">
+          <p>An Express.js web application with multiple routes, route parameters, query string handling, and a logger middleware is created and tested successfully.</p>
+        </div>
+      </section>
+
+      <!-- Viva Questions -->
+      <section id="lab10-viva" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💬</span> Viva Questions &amp; Answers</h3>
+        <div class="viva-accordion">
+          
+          <details class="viva-item" open>
+            <summary class="viva-q">1. What is Express.js and why is it used?</summary>
+            <div class="viva-a">
+              <p>Express.js is a minimal, fast, and flexible web framework for Node.js. It simplifies building robust web applications and REST APIs by providing higher-level abstractions for routing, HTTP requests/responses, template rendering, and middleware integration compared to Node's low-level built-in <code>http</code> module.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">2. What is middleware in Express.js?</summary>
+            <div class="viva-a">
+              <p>Middleware functions in Express are functions that have access to the request object (<code>req</code>), response object (<code>res</code>), and the <code>next</code> function in the application's request-response cycle. They can execute any code, modify the request/response objects, end the cycle, or call <code>next()</code> to pass control to the next middleware.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">3. What is the role of the next() function in Express middleware?</summary>
+            <div class="viva-a">
+              <p>The <code>next()</code> function passes control to the next middleware function in the middleware stack. If a middleware function does not send a response or call <code>next()</code>, the incoming request will hang indefinitely.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">4. What is the difference between route parameters and query strings?</summary>
+            <div class="viva-a">
+              <p><strong>Route parameters</strong> are named URL segments prefixed with colons (e.g. <code>/students/:id</code>) captured in <code>req.params</code>, used to identify a specific resource. <strong>Query strings</strong> follow a question mark in the URL (e.g. <code>/search?name=Rohit&dept=CSE</code>) captured in <code>req.query</code>, used for optional sorting, filtering, and searching parameters.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">5. How does Express.js differ from the Node.js http module?</summary>
+            <div class="viva-a">
+              <p>The built-in <code>http</code> module requires manual URL parsing, stream decoding for request bodies, and custom <code>if-else</code> route matching. Express provides intuitive route registration (<code>app.get</code>, <code>app.post</code>), built-in JSON body parsing (<code>express.json()</code>), middleware chaining, and automated HTTP helpers (like <code>res.json()</code> and <code>res.status()</code>).</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">6. What is app.use() in Express.js?</summary>
+            <div class="viva-a">
+              <p><code>app.use()</code> mounts specified middleware function(s) at the specified path (or globally on every request if no path is given). Common examples include mounting loggers, CORS policies, authentication guards, and body parsers.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">7. What HTTP methods are supported by Express.js?</summary>
+            <div class="viva-a">
+              <p>Express supports all standard HTTP verbs corresponding to routing methods: <code>app.get()</code>, <code>app.post()</code>, <code>app.put()</code>, <code>app.delete()</code>, <code>app.patch()</code>, <code>app.head()</code>, <code>app.options()</code>, as well as <code>app.all()</code> to match all HTTP methods on a given path.</p>
             </div>
           </details>
 

@@ -1,6 +1,6 @@
 /**
  * Full Stack Development Laboratory Manual Reader
- * Supporting Labs 4, 5, 6, 7, and 8
+ * Supporting Labs 4, 5, 6, 7, 8, 9, and 10
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,16 +12,18 @@ document.addEventListener('DOMContentLoaded', () => {
   initLab6Demo();
   initLab7Demo();
   initLab8Demo();
+  initLab9Demo();
+  initLab10Demo();
 });
 
 /* ==========================================================================
-   1. Tab Navigation for Lab 4, 5, 6, 7, 8
+   1. Tab Navigation for Lab 4 through 10
    ========================================================================== */
 
 function initLabTabs() {
   const tabButtons = document.querySelectorAll('.lab-tab-btn');
   const panels = document.querySelectorAll('.lab-panel');
-  const validTargets = ['lab4', 'lab5', 'lab6', 'lab7', 'lab8'];
+  const validTargets = ['lab4', 'lab5', 'lab6', 'lab7', 'lab8', 'lab9', 'lab10'];
 
   function switchLab(targetId) {
     if (!validTargets.includes(targetId)) {
@@ -396,8 +398,7 @@ function initLab8Demo() {
     const badge = document.getElementById('serverStatusBadge');
     const bodyBox = document.getElementById('serverResponseBody');
 
-    // Update active button state
-    document.querySelectorAll('.route-btn').forEach(btn => {
+    document.querySelectorAll('#panel-lab8 .route-btn').forEach(btn => {
       btn.classList.remove('active');
     });
     if (event && event.currentTarget) {
@@ -442,6 +443,147 @@ function initLab8Demo() {
     badge.className = 'status-badge status-200';
     badge.textContent = '200 OK';
     bodyBox.textContent = JSON.stringify({ received: parsed }, null, 2);
+  };
+}
+
+/* ==========================================================================
+   10. Lab 9 Interactive Demo (Node.js File System Simulator)
+   ========================================================================== */
+
+let vfsState = {
+  fileExists: true,
+  content: "Student 1: Rohit Kumar\nStudent 2: Ananya Sharma\n",
+  tempRenamed: false
+};
+
+function initLab9Demo() {
+  updateVfsDisplay();
+
+  window.executeFsAction = function(action) {
+    const logBox = document.getElementById('vfsConsoleLog');
+    if (!logBox) return;
+
+    if (action === 'write') {
+      vfsState.fileExists = true;
+      vfsState.content = "Student 1: Rohit Kumar\nStudent 2: Ananya Sharma\n";
+      logBox.textContent = "File written successfully.";
+      updateVfsDisplay();
+    } else if (action === 'read') {
+      if (vfsState.fileExists) {
+        logBox.textContent = "File Content:\n" + vfsState.content;
+      } else {
+        logBox.textContent = "Error: ENOENT: no such file or directory, open 'students.txt'";
+      }
+    } else if (action === 'append') {
+      if (!vfsState.fileExists) {
+        vfsState.fileExists = true;
+        vfsState.content = "";
+      }
+      vfsState.content += "Student 3: Vikram Rao\n";
+      logBox.textContent = "Data appended successfully.";
+      updateVfsDisplay();
+    } else if (action === 'delete') {
+      if (vfsState.fileExists) {
+        vfsState.fileExists = false;
+        vfsState.content = "";
+        logBox.textContent = "File deleted successfully.";
+      } else {
+        logBox.textContent = "Error: File does not exist (fs.access returned non-zero code).";
+      }
+      updateVfsDisplay();
+    } else if (action === 'rename') {
+      vfsState.tempRenamed = true;
+      logBox.textContent = "File renamed successfully.\n(temp.txt -> renamed_temp.txt)";
+    }
+  };
+
+  window.resetFsSimulator = function() {
+    vfsState = {
+      fileExists: true,
+      content: "Student 1: Rohit Kumar\nStudent 2: Ananya Sharma\n",
+      tempRenamed: false
+    };
+    const logBox = document.getElementById('vfsConsoleLog');
+    if (logBox) logBox.textContent = "Simulator reset. File restored.";
+    updateVfsDisplay();
+  };
+}
+
+function updateVfsDisplay() {
+  const contentEl = document.getElementById('vfsFileContent');
+  const stateEl = document.getElementById('vfsFileState');
+
+  if (contentEl && stateEl) {
+    if (vfsState.fileExists) {
+      stateEl.textContent = "File exists";
+      stateEl.style.color = "var(--brand-accent)";
+      contentEl.textContent = vfsState.content || "(empty file)";
+    } else {
+      stateEl.textContent = "File deleted (does not exist)";
+      stateEl.style.color = "var(--brand-danger)";
+      contentEl.textContent = "(no file on disk)";
+    }
+  }
+}
+
+/* ==========================================================================
+   11. Lab 10 Interactive Demo (Express.js Routing and Middleware Simulator)
+   ========================================================================== */
+
+function initLab10Demo() {
+  window.triggerExpressDemo = function(routeType) {
+    const btnHome = document.getElementById('btnExpRouteHome');
+    const btnParam = document.getElementById('btnExpRouteParam');
+    const btnQuery = document.getElementById('btnExpRouteQuery');
+    const paramControls = document.getElementById('expressParamControls');
+    const queryControls = document.getElementById('expressQueryControls');
+    const urlLabel = document.getElementById('expCurrentUrlLabel');
+    const responseBody = document.getElementById('expResponseBody');
+    const loggerWindow = document.getElementById('expressLoggerWindow');
+
+    if (!btnHome || !btnParam || !btnQuery) return;
+
+    btnHome.classList.remove('active');
+    btnParam.classList.remove('active');
+    btnQuery.classList.remove('active');
+
+    let currentUrl = '';
+    let responseObj = {};
+
+    if (routeType === 'home') {
+      btnHome.classList.add('active');
+      paramControls.style.display = 'none';
+      queryControls.style.display = 'none';
+      currentUrl = '/';
+      responseObj = { message: 'Welcome to Express.js Lab!' };
+    } else if (routeType === 'param') {
+      btnParam.classList.add('active');
+      paramControls.style.display = 'block';
+      queryControls.style.display = 'none';
+      const studentId = document.getElementById('expStudentIdInput')?.value || '101';
+      currentUrl = `/students/${encodeURIComponent(studentId)}`;
+      responseObj = { studentId: studentId, message: 'Student details fetched' };
+    } else if (routeType === 'query') {
+      btnQuery.classList.add('active');
+      paramControls.style.display = 'none';
+      queryControls.style.display = 'block';
+      const name = document.getElementById('expQueryName')?.value || 'Rohit';
+      const dept = document.getElementById('expQueryDept')?.value || 'CSE';
+      currentUrl = `/search?name=${encodeURIComponent(name)}&dept=${encodeURIComponent(dept)}`;
+      responseObj = { search: { name: name, dept: dept }, message: 'Search results' };
+    }
+
+    urlLabel.textContent = `Endpoint: GET http://localhost:3001${currentUrl}`;
+    responseBody.textContent = JSON.stringify(responseObj, null, 2);
+
+    // Append middleware log entry
+    if (loggerWindow) {
+      const logLine = document.createElement('div');
+      logLine.className = 'log-entry';
+      logLine.textContent = `GET ${currentUrl} - ${new Date().toISOString()}`;
+      loggerWindow.appendChild(logLine);
+      loggerWindow.scrollTop = loggerWindow.scrollHeight;
+    }
   };
 }
 
