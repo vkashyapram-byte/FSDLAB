@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Full Stack Development Lab Manual - Labs 4, 5 & 6</title>
+  <meta name="color-scheme" content="light dark">
+  <script>
+    try {
+      const savedTheme = localStorage.getItem("color-scheme");
+      if (savedTheme) {
+        document.querySelector('meta[name="color-scheme"]').content = savedTheme;
+      }
+    } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header & University Branding -->
+  <header class="site-header">
+    <div class="header-inner container">
+      <div class="brand-block">
+        <div class="badge-university">
+          <svg class="icon-edu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+          <span>CMR UNIVERSITY • School of Engineering and Technology</span>
+        </div>
+        <h1 class="course-title">4CSPL2021: FULL STACK DEVELOPMENT</h1>
+        <p class="course-subtitle">Laboratory Manual • Instructor Faculty: Rohit Kumar</p>
+      </div>
+
+      <div class="header-actions">
+        <!-- Font Size Controls -->
+        <div class="reader-controls" aria-label="Reading Controls">
+          <button type="button" id="btnFontDec" class="tool-btn" title="Decrease font size" aria-label="Decrease font size">A−</button>
+          <button type="button" id="btnFontReset" class="tool-btn" title="Reset font size" aria-label="Reset font size">A</button>
+          <button type="button" id="btnFontInc" class="tool-btn" title="Increase font size" aria-label="Increase font size">A+</button>
+        </div>
+
+        <!-- Dark/Light Theme Toggle -->
+        <button type="button" id="themeToggle" class="theme-btn" aria-label="Toggle theme">
+          <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+          </svg>
+          <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+          <span id="themeLabel">Theme</span>
+        </button>
+
+        <!-- Print Manual -->
+        <button type="button" class="tool-btn print-btn" onclick="window.print()" title="Print this Lab" aria-label="Print this Lab">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect x="6" y="14" width="12" height="8"/>
+          </svg>
+          <span>Print</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 3 Primary Navigation Buttons: Lab 4, Lab 5, Lab 6 -->
+  <nav class="lab-navigation" aria-label="Lab Manual Navigation">
+    <div class="nav-inner container">
+      <div class="button-group" role="tablist" aria-label="Laboratory Experiments">
+        <button type="button" 
+                class="lab-tab-btn active" 
+                id="btn-lab4" 
+                role="tab" 
+                aria-selected="true" 
+                aria-controls="panel-lab4" 
+                data-target="lab4">
+          <span class="lab-badge">Exp 04</span>
+          <span class="lab-name">Lab 4: Form Validation Using JS</span>
+        </button>
+
+        <button type="button" 
+                class="lab-tab-btn" 
+                id="btn-lab5" 
+                role="tab" 
+                aria-selected="false" 
+                aria-controls="panel-lab5" 
+                data-target="lab5">
+          <span class="lab-badge">Exp 05</span>
+          <span class="lab-name">Lab 5: React Components &amp; Props</span>
+        </button>
+
+        <button type="button" 
+                class="lab-tab-btn" 
+                id="btn-lab6" 
+                role="tab" 
+                aria-selected="false" 
+                aria-controls="panel-lab6" 
+                data-target="lab6">
+          <span class="lab-badge">Exp 06</span>
+          <span class="lab-name">Lab 6: React State &amp; Events</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Reader Content Area -->
+  <main class="main-content container">
+
+    <!-- ========================================================================= -->
+    <!-- LAB 4 CONTENT -->
+    <!-- ========================================================================= -->
+    <article id="panel-lab4" class="lab-panel active" role="tabpanel" aria-labelledby="btn-lab4">
+      
+      <!-- Lab Header -->
+      <header class="lab-article-header">
+        <div class="exp-meta">
+          <span class="exp-number">Experiment No. 4</span>
+          <span class="exp-date">Date: [ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]</span>
+        </div>
+        <h2 class="exp-title">Form Validation Using JavaScript</h2>
+      </header>
+
+      <!-- Quick Section Jump Nav -->
+      <nav class="toc-jump-bar" aria-label="Lab 4 Quick Navigation">
+        <a href="#lab4-aim">Aim</a>
+        <a href="#lab4-requirements">Requirements</a>
+        <a href="#lab4-theory">Suggested Reading</a>
+        <a href="#lab4-procedure">Procedure</a>
+        <a href="#lab4-fullcode">Complete Code</a>
+        <a href="#lab4-demo">Interactive Demo</a>
+        <a href="#lab4-inferences">Inferences</a>
+        <a href="#lab4-output">Output</a>
+        <a href="#lab4-viva">Viva Questions</a>
+      </nav>
+
+      <!-- Aim -->
+      <section id="lab4-aim" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">🎯</span> Aim</h3>
+        <p class="section-text">
+          To create a user registration form and implement client-side validation using JavaScript to ensure correct and complete data entry.
+        </p>
+      </section>
+
+      <!-- Requirements -->
+      <section id="lab4-requirements" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💻</span> Requirements</h3>
+        <ol class="manual-list">
+          <li>Computer or Laptop with a modern web browser.</li>
+          <li>Visual Studio Code with Live Server extension.</li>
+          <li>Basic knowledge of HTML form elements and JavaScript.</li>
+          <li>Understanding of regular expressions for pattern matching.</li>
+        </ol>
+      </section>
+
+      <!-- Suggested Reading -->
+      <section id="lab4-theory" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📚</span> Suggested Reading (Theoretical Background)</h3>
+        <ol class="manual-list">
+          <li>HTML5 form elements and input types.</li>
+          <li>JavaScript form validation techniques.</li>
+          <li>Regular expressions in JavaScript.</li>
+          <li>HTML5 built-in validation attributes such as <code>required</code>, <code>pattern</code>, and <code>minlength</code>.</li>
+        </ol>
+      </section>
+
+      <!-- Procedure -->
+      <section id="lab4-procedure" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📝</span> Procedure</h3>
+        <ol class="procedure-list">
+          <li>
+            <p><strong>Step 1:</strong> Create a new file named <code>experiment4.html</code> inside the <code>fsd_lab</code> folder.</p>
+          </li>
+          <li>
+            <p><strong>Step 2:</strong> Design a registration form with the following fields: <strong>Full Name</strong>, <strong>Email</strong>, <strong>Password</strong>, <strong>Confirm Password</strong>, <strong>Phone Number</strong>, and a <strong>Submit</strong> button.</p>
+          </li>
+          <li>
+            <p><strong>Step 3:</strong> Write JavaScript validation for the Full Name field (minimum 3 characters):</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>JavaScript • Full Name Validation</span>
+                <button class="copy-btn" data-clipboard="code-lab4-name">Copy</button>
+              </div>
+              <pre><code id="code-lab4-name">if (name.value.trim().length &lt; 3) {
+  showError('nameError', 'Name must be at least 3 characters.');
+  isValid = false;
+}</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 4:</strong> Write validation for the Email field using a regular expression:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>JavaScript • Email Regex Validation</span>
+                <button class="copy-btn" data-clipboard="code-lab4-email">Copy</button>
+              </div>
+              <pre><code id="code-lab4-email">const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+if (!emailRegex.test(email.value)) {
+  showError('emailError', 'Enter a valid email address.');
+  isValid = false;
+}</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 5:</strong> Write validation to check that Password is at least 8 characters:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>JavaScript • Password Length Validation</span>
+                <button class="copy-btn" data-clipboard="code-lab4-pass">Copy</button>
+              </div>
+              <pre><code id="code-lab4-pass">if (password.value.length &lt; 8) {
+  showError('passwordError', 'Password must be at least 8 characters.');
+  isValid = false;
+}</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 6:</strong> Write validation to confirm that Password and Confirm Password match.</p>
+          </li>
+          <li>
+            <p><strong>Step 7:</strong> Write validation for Phone Number to accept exactly 10 digits:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>JavaScript • Phone Regex Validation</span>
+                <button class="copy-btn" data-clipboard="code-lab4-phone">Copy</button>
+              </div>
+              <pre><code id="code-lab4-phone">const phoneRegex = /^\d{10}$/;
+if (!phoneRegex.test(phone.value)) {
+  showError('phoneError', 'Enter a valid 10-digit phone number.');
+  isValid = false;
+}</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 8:</strong> Display appropriate error messages below each field and show a success message on valid submission.</p>
+          </li>
+          <li>
+            <p><strong>Step 9:</strong> Test the form with valid and invalid inputs to verify all validations.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Complete Runnable File Box -->
+      <section id="lab4-fullcode" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📄</span> Complete Source Code: <code>experiment4.html</code></h3>
+        <p class="section-text">The full synthesized HTML + JavaScript implementation complying with all procedure specifications:</p>
+        <div class="code-wrapper">
+          <div class="code-header">
+            <span>experiment4.html</span>
+            <button class="copy-btn" data-clipboard="code-lab4-full">Copy Full File</button>
+          </div>
+          <pre><code id="code-lab4-full">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Experiment 4 - Form Validation&lt;/title&gt;
+  &lt;style&gt;
+    body { font-family: Arial, sans-serif; margin: 30px; background: #f4f6f9; }
+    .form-box { max-width: 420px; margin: auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    h2 { text-align: center; color: #1f3864; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: bold; }
+    input { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+    .error { color: #dc3545; font-size: 13px; margin-top: 4px; display: block; }
+    .success { color: #28a745; font-size: 15px; text-align: center; font-weight: bold; margin-top: 15px; }
+    button { width: 100%; padding: 12px; background: #1f3864; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+    button:hover { background: #152745; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="form-box"&gt;
+    &lt;h2&gt;User Registration&lt;/h2&gt;
+    &lt;form id="regForm" onsubmit="return validateForm(event)"&gt;
+      &lt;div class="form-group"&gt;
+        &lt;label for="name"&gt;Full Name&lt;/label&gt;
+        &lt;input type="text" id="name" placeholder="Enter full name"&gt;
+        &lt;span class="error" id="nameError"&gt;&lt;/span&gt;
+      &lt;/div&gt;
+
+      &lt;div class="form-group"&gt;
+        &lt;label for="email"&gt;Email Address&lt;/label&gt;
+        &lt;input type="text" id="email" placeholder="example@domain.com"&gt;
+        &lt;span class="error" id="emailError"&gt;&lt;/span&gt;
+      &lt;/div&gt;
+
+      &lt;div class="form-group"&gt;
+        &lt;label for="password"&gt;Password&lt;/label&gt;
+        &lt;input type="password" id="password" placeholder="At least 8 characters"&gt;
+        &lt;span class="error" id="passwordError"&gt;&lt;/span&gt;
+      &lt;/div&gt;
+
+      &lt;div class="form-group"&gt;
+        &lt;label for="confirmPassword"&gt;Confirm Password&lt;/label&gt;
+        &lt;input type="password" id="confirmPassword" placeholder="Re-enter password"&gt;
+        &lt;span class="error" id="confirmPasswordError"&gt;&lt;/span&gt;
+      &lt;/div&gt;
+
+      &lt;div class="form-group"&gt;
+        &lt;label for="phone"&gt;Phone Number&lt;/label&gt;
+        &lt;input type="text" id="phone" placeholder="10-digit mobile number"&gt;
+        &lt;span class="error" id="phoneError"&gt;&lt;/span&gt;
+      &lt;/div&gt;
+
+      &lt;button type="submit"&gt;Register&lt;/button&gt;
+      &lt;div class="success" id="successMsg"&gt;&lt;/div&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    function showError(elementId, message) {
+      document.getElementById(elementId).innerText = message;
+    }
+
+    function clearErrors() {
+      const errorSpans = document.querySelectorAll('.error');
+      errorSpans.forEach(span =&gt; span.innerText = '');
+      document.getElementById('successMsg').innerText = '';
+    }
+
+    function validateForm(e) {
+      e.preventDefault();
+      clearErrors();
+      let isValid = true;
+
+      const name = document.getElementById('name');
+      const email = document.getElementById('email');
+      const password = document.getElementById('password');
+      const confirmPassword = document.getElementById('confirmPassword');
+      const phone = document.getElementById('phone');
+
+      // 1. Name validation (min 3 chars)
+      if (name.value.trim().length &lt; 3) {
+        showError('nameError', 'Name must be at least 3 characters.');
+        isValid = false;
+      }
+
+      // 2. Email regex validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.value)) {
+        showError('emailError', 'Enter a valid email address.');
+        isValid = false;
+      }
+
+      // 3. Password min length 8
+      if (password.value.length &lt; 8) {
+        showError('passwordError', 'Password must be at least 8 characters.');
+        isValid = false;
+      }
+
+      // 4. Confirm password match
+      if (password.value !== confirmPassword.value) {
+        showError('confirmPasswordError', 'Passwords do not match.');
+        isValid = false;
+      }
+
+      // 5. Phone number 10 digits
+      const phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(phone.value)) {
+        showError('phoneError', 'Enter a valid 10-digit phone number.');
+        isValid = false;
+      }
+
+      if (isValid) {
+        document.getElementById('successMsg').innerText = 'Registration Successful! All validations passed.';
+      }
+      return false;
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- Live Interactive Demo -->
+      <section id="lab4-demo" class="manual-section demo-section">
+        <h3 class="section-title"><span class="title-icon">⚡</span> Live Interactive Lab Demo</h3>
+        <p class="section-text">Test the actual form validation right here in your browser:</p>
+        <div class="interactive-card">
+          <form id="liveDemoForm4" onsubmit="return handleLab4DemoSubmit(event)">
+            <div class="demo-form-grid">
+              <div class="demo-field">
+                <label for="demo4_name">Full Name (min 3 chars):</label>
+                <input type="text" id="demo4_name" placeholder="e.g. Rohit Kumar">
+                <span class="live-error" id="demo4_name_err"></span>
+              </div>
+              <div class="demo-field">
+                <label for="demo4_email">Email:</label>
+                <input type="text" id="demo4_email" placeholder="e.g. rohit@cmr.edu.in">
+                <span class="live-error" id="demo4_email_err"></span>
+              </div>
+              <div class="demo-field">
+                <label for="demo4_pass">Password (min 8 chars):</label>
+                <input type="password" id="demo4_pass" placeholder="••••••••">
+                <span class="live-error" id="demo4_pass_err"></span>
+              </div>
+              <div class="demo-field">
+                <label for="demo4_confirm">Confirm Password:</label>
+                <input type="password" id="demo4_confirm" placeholder="••••••••">
+                <span class="live-error" id="demo4_confirm_err"></span>
+              </div>
+              <div class="demo-field full-width">
+                <label for="demo4_phone">Phone (10 digits):</label>
+                <input type="text" id="demo4_phone" placeholder="9876543210">
+                <span class="live-error" id="demo4_phone_err"></span>
+              </div>
+            </div>
+            <div class="demo-btn-row">
+              <button type="submit" class="primary-action-btn">Validate &amp; Submit</button>
+              <button type="button" class="secondary-action-btn" onclick="resetLab4Demo()">Clear</button>
+            </div>
+            <div id="demo4_success" class="live-success-banner" style="display:none;"></div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Inferences -->
+      <section id="lab4-inferences" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💡</span> Inferences</h3>
+        <ol class="manual-list">
+          <li>Understanding how client-side validation improves user experience and reduces server load.</li>
+          <li>Learning how regular expressions are used for pattern-based validation.</li>
+          <li>Observing how error messages guide users to correct their inputs.</li>
+          <li>Gaining experience in handling form submission events using JavaScript.</li>
+        </ol>
+      </section>
+
+      <!-- Output -->
+      <section id="lab4-output" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📊</span> Output</h3>
+        <div class="output-box">
+          <p>A user registration form with complete client-side validation is implemented, displaying appropriate error messages for invalid inputs and a success message for valid form submission.</p>
+        </div>
+      </section>
+
+      <!-- Viva Questions -->
+      <section id="lab4-viva" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💬</span> Viva Questions &amp; Answers</h3>
+        <div class="viva-accordion">
+          
+          <details class="viva-item" open>
+            <summary class="viva-q">1. What is form validation and why is it important?</summary>
+            <div class="viva-a">
+              <p>Form validation is the process of verifying that user input submitted through a web form conforms to specified criteria and business rules (e.g., non-empty fields, valid email syntax, minimum password length) before processing or sending to a server. It ensures data accuracy, integrity, and security, and improves user experience by giving immediate feedback.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">2. What is the difference between client-side and server-side validation?</summary>
+            <div class="viva-a">
+              <p><strong>Client-side validation</strong> runs in the browser using HTML5/JavaScript before sending data to the server. It gives immediate feedback without network latency. <strong>Server-side validation</strong> executes on the backend server. It is essential for security because client-side validation can be disabled or bypassed by malicious actors.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">3. What is a regular expression and how is it used in JavaScript?</summary>
+            <div class="viva-a">
+              <p>A regular expression (RegEx) is a sequence of characters that forms a search pattern used for text search and string validation. In JavaScript, regex objects can be created using literals (<code>/.../</code>) or the <code>RegExp</code> constructor, and evaluated using methods like <code>.test(string)</code> (returns boolean) and <code>.match(regex)</code>.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">4. What is the preventDefault method used for?</summary>
+            <div class="viva-a">
+              <p>The <code>event.preventDefault()</code> method prevents the default browser action from taking place. On form submit events, it stops the page from reloading or navigating away, allowing custom JavaScript validation and asynchronous handling.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">5. How can you check if an input field is empty using JavaScript?</summary>
+            <div class="viva-a">
+              <p>You can read the input's <code>value</code> property, remove surrounding whitespace using <code>.trim()</code>, and compare against an empty string or length 0:
+              <code>if (inputElement.value.trim() === '') { /* is empty */ }</code></p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">6. What are HTML5 built-in validation attributes?</summary>
+            <div class="viva-a">
+              <p>HTML5 provides declarative validation attributes including: <code>required</code> (must not be empty), <code>minlength</code> and <code>maxlength</code>, <code>min</code> and <code>max</code>, <code>pattern</code> (specifies regex), and specific input types such as <code>type="email"</code>, <code>type="number"</code>, and <code>type="url"</code>.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">7. Why should client-side validation not replace server-side validation?</summary>
+            <div class="viva-a">
+              <p>Client-side validation can easily be bypassed by disabling JavaScript in the browser, editing the DOM via DevTools, or making direct HTTP requests via Postman or curl. Hence, client-side validation is strictly for user experience, while server-side validation is mandatory for application security.</p>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+    </article>
+
+    <!-- ========================================================================= -->
+    <!-- LAB 5 CONTENT -->
+    <!-- ========================================================================= -->
+    <article id="panel-lab5" class="lab-panel" role="tabpanel" aria-labelledby="btn-lab5" hidden>
+      
+      <!-- Lab Header -->
+      <header class="lab-article-header">
+        <div class="exp-meta">
+          <span class="exp-number">Experiment No. 5</span>
+          <span class="exp-date">Date: [ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]</span>
+        </div>
+        <h2 class="exp-title">React - Basic Application Using Components</h2>
+      </header>
+
+      <!-- Quick Section Jump Nav -->
+      <nav class="toc-jump-bar" aria-label="Lab 5 Quick Navigation">
+        <a href="#lab5-aim">Aim</a>
+        <a href="#lab5-requirements">Requirements</a>
+        <a href="#lab5-theory">Suggested Reading</a>
+        <a href="#lab5-procedure">Procedure</a>
+        <a href="#lab5-demo">Live Component Preview</a>
+        <a href="#lab5-inferences">Inferences</a>
+        <a href="#lab5-output">Output</a>
+        <a href="#lab5-viva">Viva Questions</a>
+      </nav>
+
+      <!-- Aim -->
+      <section id="lab5-aim" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">🎯</span> Aim</h3>
+        <p class="section-text">
+          To set up the React development environment, install required packages using npm, and build a basic React application using functional components.
+        </p>
+      </section>
+
+      <!-- Requirements -->
+      <section id="lab5-requirements" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💻</span> Requirements</h3>
+        <ol class="manual-list">
+          <li>Computer or Laptop with Node.js (v16 or above) and npm installed.</li>
+          <li>Visual Studio Code editor.</li>
+          <li>Internet connection for downloading npm packages.</li>
+          <li>Basic knowledge of HTML and JavaScript.</li>
+        </ol>
+      </section>
+
+      <!-- Suggested Reading -->
+      <section id="lab5-theory" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📚</span> Suggested Reading (Theoretical Background)</h3>
+        <ol class="manual-list">
+          <li>Introduction to React and its component-based architecture.</li>
+          <li>Understanding JSX syntax and how it differs from HTML.</li>
+          <li>React project structure created using create-react-app or Vite.</li>
+          <li>Concept of functional components and props in React.</li>
+        </ol>
+      </section>
+
+      <!-- Procedure -->
+      <section id="lab5-procedure" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📝</span> Procedure</h3>
+        <ol class="procedure-list">
+          <li>
+            <p><strong>Step 1:</strong> Open the terminal in VS Code.</p>
+          </li>
+          <li>
+            <p><strong>Step 2:</strong> Create a new React application using Vite by running:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>Terminal / Bash</span>
+                <button class="copy-btn" data-clipboard="code-lab5-vite">Copy</button>
+              </div>
+              <pre><code id="code-lab5-vite">npm create vite@latest react-lab -- --template react
+cd react-lab
+npm install
+npm run dev</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 3:</strong> Open the project in VS Code and explore the folder structure (<code>src</code>, <code>public</code>, <code>package.json</code>).</p>
+          </li>
+          <li>
+            <p><strong>Step 4:</strong> Open <code>src/App.jsx</code> and replace the existing content with a simple component:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>src/App.jsx</span>
+                <button class="copy-btn" data-clipboard="code-lab5-app">Copy</button>
+              </div>
+              <pre><code id="code-lab5-app">function App() {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Welcome to Full Stack Lab&lt;/h1&gt;
+      &lt;StudentCard name="Rohit Kumar" dept="CSE" /&gt;
+      &lt;StudentCard name="Ananya Sharma" dept="ISE" /&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 5:</strong> Create a new file named <code>StudentCard.jsx</code> inside the <code>src</code> folder:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>src/StudentCard.jsx</span>
+                <button class="copy-btn" data-clipboard="code-lab5-card">Copy</button>
+              </div>
+              <pre><code id="code-lab5-card">function StudentCard({ name, dept }) {
+  return (
+    &lt;div style={{ border: '1px solid #ccc', padding: '10px', margin: '10px' }}&gt;
+      &lt;h3&gt;{name}&lt;/h3&gt;
+      &lt;p&gt;Department: {dept}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default StudentCard;</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 6:</strong> Import the StudentCard component in <code>App.jsx</code>:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>src/App.jsx (import line)</span>
+                <button class="copy-btn" data-clipboard="code-lab5-import">Copy</button>
+              </div>
+              <pre><code id="code-lab5-import">import StudentCard from './StudentCard';</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 7:</strong> Save all files and verify the output in the browser at <code>http://localhost:5173</code>.</p>
+          </li>
+          <li>
+            <p><strong>Step 8:</strong> Observe how props pass data from App to StudentCard component.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Live Component Preview -->
+      <section id="lab5-demo" class="manual-section demo-section">
+        <h3 class="section-title"><span class="title-icon">⚡</span> Interactive Component &amp; Props Simulator</h3>
+        <p class="section-text">See how the <code>StudentCard</code> component dynamically renders props in real time:</p>
+        <div class="interactive-card">
+          <div class="live-props-controls">
+            <div class="demo-field">
+              <label for="propStudentName">Student Name:</label>
+              <input type="text" id="propStudentName" value="Rohit Kumar" oninput="updateStudentCardPreview()">
+            </div>
+            <div class="demo-field">
+              <label for="propStudentDept">Department:</label>
+              <input type="text" id="propStudentDept" value="CSE" oninput="updateStudentCardPreview()">
+            </div>
+          </div>
+
+          <div class="demo-rendered-box">
+            <h4>Browser Render Output (Simulating <code>http://localhost:5173</code>):</h4>
+            <div class="browser-window">
+              <div class="browser-bar">
+                <span class="browser-dot red"></span>
+                <span class="browser-dot yellow"></span>
+                <span class="browser-dot green"></span>
+                <span class="browser-url">http://localhost:5173</span>
+              </div>
+              <div class="browser-body">
+                <h1>Welcome to Full Stack Lab</h1>
+                <div id="simulatedStudentCard1" style="border: 1px solid #ccc; padding: 10px; margin: 10px; background: var(--bg-card); border-radius: 4px;">
+                  <h3 id="simCardName">Rohit Kumar</h3>
+                  <p id="simCardDept">Department: CSE</p>
+                </div>
+                <div style="border: 1px solid #ccc; padding: 10px; margin: 10px; background: var(--bg-card); border-radius: 4px;">
+                  <h3>Ananya Sharma</h3>
+                  <p>Department: ISE</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Inferences -->
+      <section id="lab5-inferences" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💡</span> Inferences</h3>
+        <ol class="manual-list">
+          <li>Understanding how React uses a component-based architecture to build UIs.</li>
+          <li>Learning how JSX combines HTML-like syntax with JavaScript logic.</li>
+          <li>Observing how props pass data from parent to child components.</li>
+          <li>Gaining experience in setting up and running a React development environment.</li>
+        </ol>
+      </section>
+
+      <!-- Output -->
+      <section id="lab5-output" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📊</span> Output</h3>
+        <div class="output-box">
+          <p>A basic React application is created successfully with functional components and props, displaying student card details in the browser.</p>
+        </div>
+      </section>
+
+      <!-- Viva Questions -->
+      <section id="lab5-viva" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💬</span> Viva Questions &amp; Answers</h3>
+        <div class="viva-accordion">
+          
+          <details class="viva-item" open>
+            <summary class="viva-q">1. What is React and why is it used?</summary>
+            <div class="viva-a">
+              <p>React is an open-source JavaScript library developed by Meta for building dynamic and interactive user interfaces, especially single-page applications (SPAs). It is used for its component-based architecture, efficient Virtual DOM rendering, unidirectional data flow, and rich ecosystem.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">2. What is JSX in React?</summary>
+            <div class="viva-a">
+              <p>JSX stands for JavaScript XML. It is a syntax extension for JavaScript that allows developers to write HTML-like markup directly within JavaScript code. Babel or modern bundlers compile JSX down into standard <code>React.createElement()</code> function calls.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">3. What are props in React?</summary>
+            <div class="viva-a">
+              <p>Props (short for properties) are read-only inputs passed from a parent component down to a child component. They allow components to be dynamic and reusable by parameterizing data. In React, props are immutable within the child component.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">4. What is the difference between a class component and a functional component?</summary>
+            <div class="viva-a">
+              <p>Class components are ES6 classes extending <code>React.Component</code> with a <code>render()</code> method and lifecycle methods (e.g. <code>componentDidMount</code>). Functional components are plain JavaScript functions that take props as an argument and return JSX. With the introduction of React Hooks (like <code>useState</code>, <code>useEffect</code>), functional components are the modern industry standard.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">5. What is the purpose of the npm run dev command?</summary>
+            <div class="viva-a">
+              <p><code>npm run dev</code> starts the Vite local development server with Hot Module Replacement (HMR). It serves the application locally (typically at <code>http://localhost:5173</code>) and updates changed modules instantly in the browser without losing component state.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">6. What is the Virtual DOM in React?</summary>
+            <div class="viva-a">
+              <p>The Virtual DOM is a lightweight in-memory JavaScript representation of the real DOM. When component state or props change, React updates the Virtual DOM, performs reconciliation (diffing algorithm) to compute minimum required changes, and batch-updates the real DOM efficiently.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">7. Why is a component-based architecture beneficial in frontend development?</summary>
+            <div class="viva-a">
+              <p>It promotes reusability, modularity, readability, and maintainability. Components isolate their markup, style, and logic, making complex user interfaces easier to test, debug, collaborate on, and scale.</p>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+    </article>
+
+    <!-- ========================================================================= -->
+    <!-- LAB 6 CONTENT -->
+    <!-- ========================================================================= -->
+    <article id="panel-lab6" class="lab-panel" role="tabpanel" aria-labelledby="btn-lab6" hidden>
+      
+      <!-- Lab Header -->
+      <header class="lab-article-header">
+        <div class="exp-meta">
+          <span class="exp-number">Experiment No. 6</span>
+          <span class="exp-date">Date: [ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]</span>
+        </div>
+        <h2 class="exp-title">React - State Management and Event Handling</h2>
+      </header>
+
+      <!-- Quick Section Jump Nav -->
+      <nav class="toc-jump-bar" aria-label="Lab 6 Quick Navigation">
+        <a href="#lab6-aim">Aim</a>
+        <a href="#lab6-requirements">Requirements</a>
+        <a href="#lab6-theory">Suggested Reading</a>
+        <a href="#lab6-procedure">Procedure</a>
+        <a href="#lab6-demo">Live Counter &amp; Todo Demo</a>
+        <a href="#lab6-inferences">Inferences</a>
+        <a href="#lab6-output">Output</a>
+        <a href="#lab6-viva">Viva Questions</a>
+      </nav>
+
+      <!-- Aim -->
+      <section id="lab6-aim" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">🎯</span> Aim</h3>
+        <p class="section-text">
+          To develop a React application that demonstrates state management using the <code>useState</code> hook and responds to user interactions through event handling.
+        </p>
+      </section>
+
+      <!-- Requirements -->
+      <section id="lab6-requirements" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💻</span> Requirements</h3>
+        <ol class="manual-list">
+          <li>Computer or Laptop with Node.js and npm installed.</li>
+          <li>React project created in Experiment 5.</li>
+          <li>Visual Studio Code editor.</li>
+          <li>Basic knowledge of React components and props.</li>
+        </ol>
+      </section>
+
+      <!-- Suggested Reading -->
+      <section id="lab6-theory" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📚</span> Suggested Reading (Theoretical Background)</h3>
+        <ol class="manual-list">
+          <li>React Hooks and the purpose of the <code>useState</code> hook.</li>
+          <li>Concept of state in React and how it differs from props.</li>
+          <li>Event handling in React (<code>onClick</code>, <code>onChange</code>, <code>onSubmit</code>).</li>
+          <li>Re-rendering in React when state changes.</li>
+        </ol>
+      </section>
+
+      <!-- Procedure -->
+      <section id="lab6-procedure" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📝</span> Procedure</h3>
+        <ol class="procedure-list">
+          <li>
+            <p><strong>Step 1:</strong> Open the React project created in Experiment 5 in VS Code.</p>
+          </li>
+          <li>
+            <p><strong>Step 2:</strong> Create a new file named <code>Counter.jsx</code> inside the <code>src</code> folder with the following content:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>src/Counter.jsx</span>
+                <button class="copy-btn" data-clipboard="code-lab6-counter">Copy</button>
+              </div>
+              <pre><code id="code-lab6-counter">import { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;Counter: {count}&lt;/h2&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Increment&lt;/button&gt;
+      &lt;button onClick={() =&gt; setCount(count - 1)}&gt;Decrement&lt;/button&gt;
+      &lt;button onClick={() =&gt; setCount(0)}&gt;Reset&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default Counter;</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 3:</strong> Create a new file named <code>TodoList.jsx</code> inside the <code>src</code> folder:</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>src/TodoList.jsx</span>
+                <button class="copy-btn" data-clipboard="code-lab6-todo">Copy</button>
+              </div>
+              <pre><code id="code-lab6-todo">import { useState } from 'react';
+
+function TodoList() {
+  const [todos, setTodos] = useState([]);
+  const [input, setInput] = useState('');
+
+  const addTodo = () =&gt; {
+    if (input.trim()) {
+      setTodos([...todos, input]);
+      setInput('');
+    }
+  };
+
+  const removeTodo = (index) =&gt; {
+    setTodos(todos.filter((_, i) =&gt; i !== index));
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;To-Do List&lt;/h2&gt;
+      &lt;input 
+        value={input} 
+        onChange={(e) =&gt; setInput(e.target.value)} 
+        placeholder="Add task" 
+      /&gt;
+      &lt;button onClick={addTodo}&gt;Add&lt;/button&gt;
+      &lt;ul&gt;
+        {todos.map((todo, i) =&gt; (
+          &lt;li key={i}&gt;
+            {todo} &lt;button onClick={() =&gt; removeTodo(i)}&gt;Remove&lt;/button&gt;
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default TodoList;</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 4:</strong> Import and render both Counter and TodoList components in <code>App.jsx</code>.</p>
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span>src/App.jsx</span>
+                <button class="copy-btn" data-clipboard="code-lab6-app">Copy</button>
+              </div>
+              <pre><code id="code-lab6-app">import Counter from './Counter';
+import TodoList from './TodoList';
+
+function App() {
+  return (
+    &lt;div style={{ padding: '20px' }}&gt;
+      &lt;h1&gt;React State Management &amp; Events&lt;/h1&gt;
+      &lt;Counter /&gt;
+      &lt;hr style={{ margin: '20px 0' }} /&gt;
+      &lt;TodoList /&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;</code></pre>
+            </div>
+          </li>
+          <li>
+            <p><strong>Step 5:</strong> Save and run the application using <code>npm run dev</code>.</p>
+          </li>
+          <li>
+            <p><strong>Step 6:</strong> Test the Counter by clicking Increment, Decrement, and Reset buttons.</p>
+          </li>
+          <li>
+            <p><strong>Step 7:</strong> Test the TodoList by adding and removing items.</p>
+          </li>
+          <li>
+            <p><strong>Step 8:</strong> Observe how state changes cause the UI to re-render automatically.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Live Counter & Todo Demo -->
+      <section id="lab6-demo" class="manual-section demo-section">
+        <h3 class="section-title"><span class="title-icon">⚡</span> Live State Management Simulator</h3>
+        <p class="section-text">Interact with the exact logic defined in <code>Counter.jsx</code> and <code>TodoList.jsx</code>:</p>
+        
+        <div class="interactive-split-grid">
+          <!-- Live Counter -->
+          <div class="interactive-card">
+            <h4 class="demo-card-title">1. Counter Component Simulation</h4>
+            <div class="counter-display">
+              <span class="counter-number" id="liveCounterValue">0</span>
+            </div>
+            <div class="counter-btn-group">
+              <button type="button" class="action-btn inc" onclick="handleCounterChange('inc')">Increment (+1)</button>
+              <button type="button" class="action-btn dec" onclick="handleCounterChange('dec')">Decrement (−1)</button>
+              <button type="button" class="action-btn reset" onclick="handleCounterChange('reset')">Reset (0)</button>
+            </div>
+          </div>
+
+          <!-- Live Todo List -->
+          <div class="interactive-card">
+            <h4 class="demo-card-title">2. To-Do List Component Simulation</h4>
+            <div class="todo-input-row">
+              <input type="text" id="liveTodoInput" placeholder="Add task (e.g. Read Experiment 7)" onkeydown="if(event.key==='Enter') handleAddTodo()">
+              <button type="button" class="primary-action-btn" onclick="handleAddTodo()">Add</button>
+            </div>
+            <ul id="liveTodoList" class="simulated-todo-list">
+              <!-- Dynamically populated -->
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Inferences -->
+      <section id="lab6-inferences" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💡</span> Inferences</h3>
+        <ol class="manual-list">
+          <li>Understanding how the <code>useState</code> hook manages component-level state in React.</li>
+          <li>Learning how event handlers update state and trigger UI re-renders.</li>
+          <li>Observing how React efficiently updates only the parts of the UI that change.</li>
+          <li>Gaining experience in building interactive React components.</li>
+        </ol>
+      </section>
+
+      <!-- Output -->
+      <section id="lab6-output" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">📊</span> Output</h3>
+        <div class="output-box">
+          <p>A React application with a Counter component and a To-Do List component is created, demonstrating state management and event handling using the <code>useState</code> hook.</p>
+        </div>
+      </section>
+
+      <!-- Viva Questions -->
+      <section id="lab6-viva" class="manual-section">
+        <h3 class="section-title"><span class="title-icon">💬</span> Viva Questions &amp; Answers</h3>
+        <div class="viva-accordion">
+          
+          <details class="viva-item" open>
+            <summary class="viva-q">1. What is state in React?</summary>
+            <div class="viva-a">
+              <p>State is an internal data storage mechanism managed within a component. Unlike props (which are passed down from above and read-only), state is mutable by the component itself using its setter function. When state updates, React schedules a re-render of that component.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">2. What is the useState hook and how is it used?</summary>
+            <div class="viva-a">
+              <p><code>useState</code> is a built-in React hook that allows functional components to declare local state variables. It takes the initial state value as an argument and returns a 2-element array containing the current state value and a state updater function:
+              <code>const [state, setState] = useState(initialValue);</code></p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">3. How is state different from props?</summary>
+            <div class="viva-a">
+              <p><strong>Props</strong> are external arguments passed down from a parent component; they are read-only and immutable by the recipient. <strong>State</strong> is private and fully controlled inside the component itself. Props allow configuration; state holds data that changes over time based on user interactions.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">4. What happens to the UI when state changes in React?</summary>
+            <div class="viva-a">
+              <p>When the setter function returned by <code>useState</code> is called with a new value, React detects the change, enqueues a re-render for that component and its children, recalculates the Virtual DOM diff, and efficiently paints the changed DOM nodes to the browser.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">5. What is an event handler in React?</summary>
+            <div class="viva-a">
+              <p>An event handler is a function passed as a prop to JSX elements (e.g. <code>onClick</code>, <code>onChange</code>, <code>onSubmit</code>) to execute logic in response to user actions like clicking, typing, or submitting forms. React wraps native browser events in cross-browser <code>SyntheticEvent</code> objects.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">6. What is the spread operator and how is it used with arrays in React?</summary>
+            <div class="viva-a">
+              <p>The ES6 spread operator (<code>...</code>) expands elements of an existing array into a new array. In React state updates, it is used to maintain immutability:
+              <code>setTodos([...todos, newTodo])</code> creates a new array reference containing all previous items plus the new item, ensuring React recognizes the state mutation.</p>
+            </div>
+          </details>
+
+          <details class="viva-item">
+            <summary class="viva-q">7. Why should state not be mutated directly in React?</summary>
+            <div class="viva-a">
+              <p>Directly mutating state (e.g., <code>todos.push(item)</code> or <code>count++</code>) does not trigger a re-render because React performs shallow reference equality checks on state. Without calling the setter function, React is unaware that data has changed, leading to silent synchronization bugs and stale UI.</p>
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+    </article>
+
+  </main>
+
+  <!-- Sticky Floating Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner container">
+      <p>CMR University • Department of CSE • Full Stack Development (4CSPL2021) Manual Reader</p>
+      <div class="footer-links">
+        <button type="button" class="footer-link-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top ↑</button>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
