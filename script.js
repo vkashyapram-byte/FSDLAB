@@ -1,10 +1,11 @@
 /**
  * Full Stack Development Laboratory Manual Reader
- * Supporting Labs 4, 5, 6, 7, 8, 9, and 10
+ * Supporting All 15 Experiments (CMR University 4CSPL2021)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   initLabTabs();
+  initCategoryFilters();
   initThemeToggle();
   initCopyButtons();
   initFontControls();
@@ -14,20 +15,27 @@ document.addEventListener('DOMContentLoaded', () => {
   initLab8Demo();
   initLab9Demo();
   initLab10Demo();
+  initLab11Demo();
+  initLab12Demo();
+  initLab13Demo();
+  initLab14Demo();
+  initLab15Demo();
 });
 
 /* ==========================================================================
-   1. Tab Navigation for Lab 4 through 10
+   1. Tab Navigation for all 15 Experiments
    ========================================================================== */
+
+const ALL_LAB_IDS = Array.from({ length: 15 }, (_, i) => `lab${i + 1}`);
 
 function initLabTabs() {
   const tabButtons = document.querySelectorAll('.lab-tab-btn');
   const panels = document.querySelectorAll('.lab-panel');
-  const validTargets = ['lab4', 'lab5', 'lab6', 'lab7', 'lab8', 'lab9', 'lab10'];
+  const quickSelect = document.getElementById('quickLabSelect');
 
-  function switchLab(targetId) {
-    if (!validTargets.includes(targetId)) {
-      targetId = 'lab4';
+  window.switchLab = function(targetId) {
+    if (!ALL_LAB_IDS.includes(targetId)) {
+      targetId = 'lab1';
     }
 
     tabButtons.forEach(btn => {
@@ -46,18 +54,23 @@ function initLabTabs() {
       }
     });
 
+    // Sync quick-select dropdown
+    if (quickSelect && quickSelect.value !== targetId) {
+      quickSelect.value = targetId;
+    }
+
     // Update URL hash without jumping
     if (history.pushState) {
       history.pushState(null, null, `#${targetId}`);
     } else {
       location.hash = `#${targetId}`;
     }
-  }
+  };
 
   tabButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const target = btn.getAttribute('data-target');
-      switchLab(target);
+      window.switchLab(target);
       const panel = document.getElementById(`panel-${target}`);
       if (panel) {
         panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -65,23 +78,63 @@ function initLabTabs() {
     });
   });
 
-  // Handle URL hash on initial load
-  const currentHash = window.location.hash.replace('#', '');
-  if (validTargets.includes(currentHash)) {
-    switchLab(currentHash);
+  // Handle quick select dropdown
+  if (quickSelect) {
+    quickSelect.addEventListener('change', (e) => {
+      window.switchLab(e.target.value);
+      const panel = document.getElementById(`panel-${e.target.value}`);
+      if (panel) {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
   }
 
-  // Handle back/forward navigation
+  // Handle URL hash on initial load
+  const currentHash = window.location.hash.replace('#', '');
+  if (ALL_LAB_IDS.includes(currentHash)) {
+    window.switchLab(currentHash);
+  } else {
+    window.switchLab('lab1');
+  }
+
+  // Handle browser back/forward navigation
   window.addEventListener('hashchange', () => {
     const hash = window.location.hash.replace('#', '');
-    if (validTargets.includes(hash)) {
-      switchLab(hash);
+    if (ALL_LAB_IDS.includes(hash)) {
+      window.switchLab(hash);
     }
   });
 }
 
 /* ==========================================================================
-   2. Theme Toggle (Light / Dark / System)
+   2. Category Filter Bar (Web, React, Node, DB, All)
+   ========================================================================== */
+
+function initCategoryFilters() {
+  const pills = document.querySelectorAll('.cat-pill');
+  const buttons = document.querySelectorAll('.lab-tab-btn');
+
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+
+      const filter = pill.getAttribute('data-filter');
+
+      buttons.forEach(btn => {
+        const cat = btn.getAttribute('data-category');
+        if (filter === 'all' || cat === filter) {
+          btn.classList.remove('is-hidden');
+        } else {
+          btn.classList.add('is-hidden');
+        }
+      });
+    });
+  });
+}
+
+/* ==========================================================================
+   3. Theme Toggle (Light / Dark / System)
    ========================================================================== */
 
 function initThemeToggle() {
@@ -125,7 +178,6 @@ function initThemeToggle() {
 
     updateButtonLabel();
 
-    // Listen to storage sync from other tabs
     window.addEventListener('storage', (e) => {
       if (e.key === 'color-scheme') {
         metaColorScheme.content = e.newValue || 'light dark';
@@ -136,7 +188,7 @@ function initThemeToggle() {
 }
 
 /* ==========================================================================
-   3. Copy Code Snippet Support
+   4. Copy Code Snippet Support
    ========================================================================== */
 
 function initCopyButtons() {
@@ -165,7 +217,7 @@ function initCopyButtons() {
 }
 
 /* ==========================================================================
-   4. Reader Font Size Controls
+   5. Reader Font Size Controls
    ========================================================================== */
 
 function initFontControls() {
@@ -200,7 +252,57 @@ function initFontControls() {
 }
 
 /* ==========================================================================
-   5. Lab 4 Interactive Demo (Form Validation)
+   6. Lab 2 Simulator: Viewport width
+   ========================================================================== */
+
+window.setLab2Viewport = function(width) {
+  const container = document.getElementById('lab2ViewportContainer');
+  const grid = document.getElementById('lab2GridArea');
+  if (!container || !grid) return;
+
+  container.style.width = width;
+  if (width === '480px') {
+    grid.style.gridTemplateColumns = '1fr';
+  } else {
+    grid.style.gridTemplateColumns = '1fr 1fr';
+  }
+};
+
+/* ==========================================================================
+   7. Lab 3 Simulator: DOM Manipulation
+   ========================================================================== */
+
+window.simLab3Add = function() {
+  const input = document.getElementById('simLab3Input');
+  const list = document.getElementById('simLab3List');
+  if (!input || !list || !input.value.trim()) return;
+
+  const li = document.createElement('li');
+  li.style.cssText = "padding: 10px 14px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;";
+  
+  const span = document.createElement('span');
+  span.textContent = input.value.trim();
+
+  const delBtn = document.createElement('button');
+  delBtn.textContent = 'Delete';
+  delBtn.style.cssText = "background: var(--brand-danger-bg); color: var(--brand-danger); border: 1px solid var(--brand-danger); padding: 4px 8px; border-radius: 4px; cursor: pointer;";
+  delBtn.onclick = () => li.remove();
+
+  li.appendChild(span);
+  li.appendChild(delBtn);
+  list.appendChild(li);
+  input.value = '';
+};
+
+window.simLab3Modify = function() {
+  const items = document.querySelectorAll('#simLab3List li span');
+  items.forEach(span => {
+    span.textContent = span.textContent.toUpperCase();
+  });
+};
+
+/* ==========================================================================
+   8. Lab 4 Demo: Form Validation
    ========================================================================== */
 
 function initLab4Demo() {
@@ -215,36 +317,30 @@ function initLab4Demo() {
     const phone = document.getElementById('demo4_phone');
     const successBanner = document.getElementById('demo4_success');
 
-    // Reset error messages
-    document.querySelectorAll('.live-error').forEach(el => el.textContent = '');
+    document.querySelectorAll('#panel-lab4 .live-error').forEach(el => el.textContent = '');
     if (successBanner) successBanner.style.display = 'none';
 
-    // 1. Name validation (min 3 chars)
     if (name.value.trim().length < 3) {
       document.getElementById('demo4_name_err').textContent = 'Name must be at least 3 characters.';
       isValid = false;
     }
 
-    // 2. Email regex validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.value)) {
       document.getElementById('demo4_email_err').textContent = 'Enter a valid email address.';
       isValid = false;
     }
 
-    // 3. Password length validation (min 8)
     if (password.value.length < 8) {
       document.getElementById('demo4_pass_err').textContent = 'Password must be at least 8 characters.';
       isValid = false;
     }
 
-    // 4. Confirm Password Match
     if (password.value !== confirmPassword.value || confirmPassword.value === '') {
       document.getElementById('demo4_confirm_err').textContent = 'Passwords do not match.';
       isValid = false;
     }
 
-    // 5. Phone validation (exact 10 digits)
     const phoneRegex = /^\d{10}$/;
     if (!phoneRegex.test(phone.value)) {
       document.getElementById('demo4_phone_err').textContent = 'Enter a valid 10-digit phone number.';
@@ -262,14 +358,14 @@ function initLab4Demo() {
   window.resetLab4Demo = function() {
     const form = document.getElementById('liveDemoForm4');
     if (form) form.reset();
-    document.querySelectorAll('.live-error').forEach(el => el.textContent = '');
+    document.querySelectorAll('#panel-lab4 .live-error').forEach(el => el.textContent = '');
     const successBanner = document.getElementById('demo4_success');
     if (successBanner) successBanner.style.display = 'none';
   };
 }
 
 /* ==========================================================================
-   6. Lab 5 Simulator (Props update)
+   9. Lab 5 Simulator: Props update
    ========================================================================== */
 
 window.updateStudentCardPreview = function() {
@@ -287,7 +383,7 @@ window.updateStudentCardPreview = function() {
 };
 
 /* ==========================================================================
-   7. Lab 6 Interactive Demo (Counter & Todo List useState)
+   10. Lab 6 Demo: Counter & Todo List useState
    ========================================================================== */
 
 let counterState = 0;
@@ -348,7 +444,7 @@ function renderLiveTodoList() {
 }
 
 /* ==========================================================================
-   8. Lab 7 Interactive Demo (React API Integration / Axios Simulator)
+   11. Lab 7 Demo: React API Integration / Axios Simulator
    ========================================================================== */
 
 function initLab7Demo() {
@@ -373,7 +469,7 @@ function initLab7Demo() {
       html += '<div class="browser-bar"><span class="browser-dot red"></span><span class="browser-dot yellow"></span><span class="browser-dot green"></span><span class="browser-url">React App Output</span></div>';
       html += '<div class="browser-body"><h2>User List</h2><div class="api-user-grid">';
       
-      users.forEach(user => {
+      users.slice(0, 8).forEach(user => {
         html += `
           <div class="api-user-item">
             <strong>${escapeHTML(user.name)}</strong> | ${escapeHTML(user.email)} | ${escapeHTML(user.address?.city || 'Unknown')}
@@ -389,7 +485,7 @@ function initLab7Demo() {
 }
 
 /* ==========================================================================
-   9. Lab 8 Interactive Demo (Node.js HTTP Server Simulator)
+   12. Lab 8 Demo: Node.js HTTP Server Simulator
    ========================================================================== */
 
 function initLab8Demo() {
@@ -447,7 +543,7 @@ function initLab8Demo() {
 }
 
 /* ==========================================================================
-   10. Lab 9 Interactive Demo (Node.js File System Simulator)
+   13. Lab 9 Demo: Node.js File System Simulator
    ========================================================================== */
 
 let vfsState = {
@@ -527,7 +623,7 @@ function updateVfsDisplay() {
 }
 
 /* ==========================================================================
-   11. Lab 10 Interactive Demo (Express.js Routing and Middleware Simulator)
+   14. Lab 10 Demo: Express.js Routing and Middleware Simulator
    ========================================================================== */
 
 function initLab10Demo() {
@@ -576,13 +672,302 @@ function initLab10Demo() {
     urlLabel.textContent = `Endpoint: GET http://localhost:3001${currentUrl}`;
     responseBody.textContent = JSON.stringify(responseObj, null, 2);
 
-    // Append middleware log entry
     if (loggerWindow) {
       const logLine = document.createElement('div');
       logLine.className = 'log-entry';
       logLine.textContent = `GET ${currentUrl} - ${new Date().toISOString()}`;
       loggerWindow.appendChild(logLine);
       loggerWindow.scrollTop = loggerWindow.scrollHeight;
+    }
+  };
+}
+
+/* ==========================================================================
+   15. Lab 11 Demo: Express RESTful CRUD API Simulator
+   ========================================================================== */
+
+let lab11Students = [
+  { id: 1, name: "Rohit Kumar", dept: "CSE" },
+  { id: 2, name: "Ananya Sharma", dept: "ISE" }
+];
+
+function initLab11Demo() {
+  window.simLab11 = function(action) {
+    const titleEl = document.getElementById('lab11EndpointTitle');
+    const badgeEl = document.getElementById('lab11StatusCode');
+    const jsonEl = document.getElementById('lab11ResponseJSON');
+    if (!titleEl || !badgeEl || !jsonEl) return;
+
+    if (action === 'getAll') {
+      titleEl.textContent = 'Endpoint: GET /students';
+      badgeEl.className = 'status-badge status-200';
+      badgeEl.textContent = '200 OK';
+      jsonEl.textContent = JSON.stringify(lab11Students, null, 2);
+    } else if (action === 'getOne') {
+      titleEl.textContent = 'Endpoint: GET /students/1';
+      const found = lab11Students.find(s => s.id === 1);
+      if (found) {
+        badgeEl.className = 'status-badge status-200';
+        badgeEl.textContent = '200 OK';
+        jsonEl.textContent = JSON.stringify(found, null, 2);
+      } else {
+        badgeEl.className = 'status-badge status-404';
+        badgeEl.textContent = '404 Not Found';
+        jsonEl.textContent = JSON.stringify({ message: 'Student not found' }, null, 2);
+      }
+    } else if (action === 'create') {
+      titleEl.textContent = 'Endpoint: POST /students';
+      const newS = { id: lab11Students.length + 1, name: "Vikram Rao", dept: "CSE" };
+      lab11Students.push(newS);
+      badgeEl.className = 'status-badge status-200';
+      badgeEl.textContent = '201 Created';
+      jsonEl.textContent = JSON.stringify(newS, null, 2);
+    } else if (action === 'update') {
+      titleEl.textContent = 'Endpoint: PUT /students/1';
+      const s = lab11Students.find(item => item.id === 1);
+      if (s) {
+        s.name = "Rohit K (Updated)";
+        badgeEl.className = 'status-badge status-200';
+        badgeEl.textContent = '200 OK';
+        jsonEl.textContent = JSON.stringify(s, null, 2);
+      }
+    } else if (action === 'delete') {
+      titleEl.textContent = 'Endpoint: DELETE /students/2';
+      lab11Students = lab11Students.filter(item => item.id !== 2);
+      badgeEl.className = 'status-badge status-200';
+      badgeEl.textContent = '200 OK';
+      jsonEl.textContent = JSON.stringify({ message: "Student deleted successfully" }, null, 2);
+    } else if (action === 'reset') {
+      lab11Students = [
+        { id: 1, name: "Rohit Kumar", dept: "CSE" },
+        { id: 2, name: "Ananya Sharma", dept: "ISE" }
+      ];
+      titleEl.textContent = 'Endpoint: Reset to Initial';
+      badgeEl.className = 'status-badge status-200';
+      badgeEl.textContent = '200 OK';
+      jsonEl.textContent = JSON.stringify(lab11Students, null, 2);
+    }
+  };
+}
+
+/* ==========================================================================
+   16. Lab 12 Demo: MongoDB Shell CRUD Simulator
+   ========================================================================== */
+
+let lab12Docs = [
+  { _id: "6724fa1", student_id: 1, name: "Rohit Kumar", dept: "CSE", marks: 85 },
+  { _id: "6724fa2", student_id: 2, name: "Ananya Sharma", dept: "ISE", marks: 90 },
+  { _id: "6724fa3", student_id: 3, name: "Vikram Rao", dept: "CSE", marks: 78 }
+];
+
+function initLab12Demo() {
+  window.simLab12 = function(action) {
+    const titleEl = document.getElementById('lab12CmdTitle');
+    const outEl = document.getElementById('lab12DocOutput');
+    if (!titleEl || !outEl) return;
+
+    if (action === 'insert') {
+      titleEl.textContent = 'Command: db.students.insertMany([...])';
+      outEl.textContent = JSON.stringify({
+        acknowledged: true,
+        insertedIds: { 0: "6724fa1", 1: "6724fa2", 2: "6724fa3" }
+      }, null, 2);
+    } else if (action === 'findAll') {
+      titleEl.textContent = 'Command: db.students.find().pretty()';
+      outEl.textContent = JSON.stringify(lab12Docs, null, 2);
+    } else if (action === 'findFilter') {
+      titleEl.textContent = 'Command: db.students.find({ dept: "CSE" })';
+      const filtered = lab12Docs.filter(d => d.dept === "CSE");
+      outEl.textContent = JSON.stringify(filtered, null, 2);
+    } else if (action === 'update') {
+      titleEl.textContent = 'Command: db.students.updateOne({ student_id: 1 }, { $set: { marks: 92 } })';
+      const target = lab12Docs.find(d => d.student_id === 1);
+      if (target) target.marks = 92;
+      outEl.textContent = JSON.stringify({ acknowledged: true, modifiedCount: 1, matchedCount: 1 }, null, 2);
+    } else if (action === 'delete') {
+      titleEl.textContent = 'Command: db.students.deleteOne({ student_id: 3 })';
+      lab12Docs = lab12Docs.filter(d => d.student_id !== 3);
+      outEl.textContent = JSON.stringify({ acknowledged: true, deletedCount: 1 }, null, 2);
+    } else if (action === 'reset') {
+      lab12Docs = [
+        { _id: "6724fa1", student_id: 1, name: "Rohit Kumar", dept: "CSE", marks: 85 },
+        { _id: "6724fa2", student_id: 2, name: "Ananya Sharma", dept: "ISE", marks: 90 },
+        { _id: "6724fa3", student_id: 3, name: "Vikram Rao", dept: "CSE", marks: 78 }
+      ];
+      titleEl.textContent = 'Command: db.students.find() [Reset]';
+      outEl.textContent = JSON.stringify(lab12Docs, null, 2);
+    }
+  };
+}
+
+/* ==========================================================================
+   17. Lab 13 Demo: Mongoose ODM Simulator
+   ========================================================================== */
+
+let lab13Students = [
+  { _id: "6724a1b8c", student_id: 1, name: "Rohit Kumar", dept: "CSE", marks: 85 },
+  { _id: "6724a1b8d", student_id: 2, name: "Ananya Sharma", dept: "ISE", marks: 90 }
+];
+
+function initLab13Demo() {
+  window.simLab13 = function(action) {
+    const titleEl = document.getElementById('lab13ActionTitle');
+    const badgeEl = document.getElementById('lab13Badge');
+    const outEl = document.getElementById('lab13CodeOutput');
+    if (!titleEl || !badgeEl || !outEl) return;
+
+    if (action === 'save') {
+      titleEl.textContent = 'Mongoose Method: const s = new Student(...); await s.save();';
+      const newObj = { _id: "6724a1b8e", student_id: 3, name: "Vikram Rao", dept: "CSE", marks: 88 };
+      lab13Students.push(newObj);
+      badgeEl.className = 'status-badge status-200';
+      badgeEl.textContent = '201 Created';
+      outEl.textContent = JSON.stringify(newObj, null, 2);
+    } else if (action === 'find') {
+      titleEl.textContent = 'Mongoose Method: await Student.find()';
+      badgeEl.className = 'status-badge status-200';
+      badgeEl.textContent = '200 OK';
+      outEl.textContent = JSON.stringify(lab13Students, null, 2);
+    } else if (action === 'update') {
+      titleEl.textContent = 'Mongoose Method: await Student.findByIdAndUpdate(id, { marks: 95 }, { new: true })';
+      if (lab13Students.length > 0) {
+        lab13Students[0].marks = 95;
+        badgeEl.className = 'status-badge status-200';
+        badgeEl.textContent = '200 OK';
+        outEl.textContent = JSON.stringify(lab13Students[0], null, 2);
+      }
+    } else if (action === 'delete') {
+      titleEl.textContent = 'Mongoose Method: await Student.findByIdAndDelete(id)';
+      if (lab13Students.length > 1) {
+        lab13Students.pop();
+        badgeEl.className = 'status-badge status-200';
+        badgeEl.textContent = '200 OK';
+        outEl.textContent = JSON.stringify({ message: "Deleted successfully" }, null, 2);
+      }
+    } else if (action === 'valError') {
+      titleEl.textContent = 'Mongoose Schema Validation (marks: 120 violates max: 100)';
+      badgeEl.className = 'status-badge status-404';
+      badgeEl.textContent = '400 Bad Request';
+      outEl.textContent = JSON.stringify({
+        name: "ValidationError",
+        message: "Student validation failed: marks: Path `marks` (120) is more than maximum allowed value (100)."
+      }, null, 2);
+    }
+  };
+}
+
+/* ==========================================================================
+   18. Lab 14 Demo: JWT Authentication Flow Simulator
+   ========================================================================== */
+
+let lab14GeneratedToken = "";
+
+function initLab14Demo() {
+  window.simLab14 = function(action) {
+    const titleEl = document.getElementById('lab14ActionTitle');
+    const badgeEl = document.getElementById('lab14Badge');
+    const outEl = document.getElementById('lab14CodeOutput');
+    if (!titleEl || !badgeEl || !outEl) return;
+
+    if (action === 'register') {
+      titleEl.textContent = 'Step 1: POST /register (bcrypt hash 10 salt rounds)';
+      badgeEl.className = 'status-badge status-200';
+      badgeEl.textContent = '201 Created';
+      outEl.textContent = JSON.stringify({
+        message: "User registered successfully",
+        user: {
+          username: "rohitkumar",
+          email: "rohit@cmr.edu.in",
+          passwordHash: "$2b$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQOEG6L5C5v8K3k9uM6u6"
+        }
+      }, null, 2);
+    } else if (action === 'login') {
+      titleEl.textContent = 'Step 2: POST /login (bcrypt.compare + jwt.sign)';
+      lab14GeneratedToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." + btoa(JSON.stringify({ id: "6724user1", exp: Math.floor(Date.now() / 1000) + 3600 })) + ".s4mpL3S1gn4tur3K3y9918237";
+      badgeEl.className = 'status-badge status-200';
+      badgeEl.textContent = '200 OK';
+      outEl.textContent = JSON.stringify({
+        token: lab14GeneratedToken,
+        expiresIn: "1h"
+      }, null, 2);
+    } else if (action === 'profileWithToken') {
+      titleEl.textContent = 'Step 3: GET /profile with Authorization: Bearer <JWT>';
+      if (!lab14GeneratedToken) {
+        badgeEl.className = 'status-badge status-404';
+        badgeEl.textContent = '401 Unauthorized';
+        outEl.textContent = JSON.stringify({ message: "No token provided. Click '2. POST /login' first." }, null, 2);
+      } else {
+        badgeEl.className = 'status-badge status-200';
+        badgeEl.textContent = '200 OK';
+        outEl.textContent = JSON.stringify({
+          message: "Access granted",
+          userId: "6724user1",
+          email: "rohit@cmr.edu.in",
+          authType: "Stateless JWT"
+        }, null, 2);
+      }
+    } else if (action === 'profileNoToken') {
+      titleEl.textContent = 'Step 4: GET /profile without Authorization Header';
+      badgeEl.className = 'status-badge status-404';
+      badgeEl.textContent = '401 Unauthorized';
+      outEl.textContent = JSON.stringify({
+        message: "No token provided"
+      }, null, 2);
+    }
+  };
+}
+
+/* ==========================================================================
+   19. Lab 15 Demo: MERN Stack Architecture Simulator
+   ========================================================================== */
+
+function initLab15Demo() {
+  window.simLab15 = function(action) {
+    const titleEl = document.getElementById('lab15StepTitle');
+    const badgeEl = document.getElementById('lab15Badge');
+    const outEl = document.getElementById('lab15OutputBox');
+    if (!titleEl || !badgeEl || !outEl) return;
+
+    if (action === 'registerFlow') {
+      titleEl.textContent = 'Step 1: Frontend RegisterPage.jsx -> POST http://localhost:5000/register';
+      badgeEl.className = 'status-badge status-200';
+      badgeEl.textContent = '201 Created';
+      outEl.textContent = JSON.stringify({
+        client: "React Frontend (Vite)",
+        action: "POST /register with { email: 'student@cmr.edu.in' }",
+        serverAction: "Express -> bcrypt.hash() -> MongoDB User.save()",
+        response: { message: "Registered successfully" }
+      }, null, 2);
+    } else if (action === 'loginFlow') {
+      titleEl.textContent = 'Step 2: Frontend LoginPage.jsx -> POST http://localhost:5000/login -> localStorage.setItem';
+      badgeEl.className = 'status-badge status-200';
+      badgeEl.textContent = '200 OK';
+      outEl.textContent = JSON.stringify({
+        client: "React Frontend (LoginPage)",
+        serverResult: "JWT generated & returned",
+        clientStorage: "localStorage.setItem('token', 'eyJhbGciOiJIUzI1Ni...')"
+      }, null, 2);
+    } else if (action === 'fetchStudents') {
+      titleEl.textContent = 'Step 3: Frontend StudentList.jsx -> GET /students with Bearer Token';
+      badgeEl.className = 'status-badge status-200';
+      badgeEl.textContent = '200 OK';
+      outEl.textContent = JSON.stringify({
+        requestHeader: "Authorization: Bearer eyJhbGciOi...",
+        backendStatus: "auth middleware verified JWT signature",
+        responseData: [
+          { _id: "101", name: "Rohit Kumar", dept: "CSE", marks: 95 },
+          { _id: "102", name: "Ananya Sharma", dept: "ISE", marks: 92 }
+        ]
+      }, null, 2);
+    } else if (action === 'addStudent') {
+      titleEl.textContent = 'Step 4: Frontend AddStudent.jsx -> POST /students';
+      badgeEl.className = 'status-badge status-200';
+      badgeEl.textContent = '201 Created';
+      outEl.textContent = JSON.stringify({
+        payload: { name: "Vikram Rao", dept: "CSE", marks: 89 },
+        database: "MongoDB student document persisted",
+        uiUpdate: "React Router navigates back to /students"
+      }, null, 2);
     }
   };
 }
